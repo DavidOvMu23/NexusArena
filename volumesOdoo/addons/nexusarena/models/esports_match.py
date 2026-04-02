@@ -24,14 +24,14 @@ class EsportsMatch(models.Model):
 		('walkover', 'Walkover'),
 	], string='Estado', default='scheduled')
 
-	resultado = fields.integer(string='Resultado')
+	resultado = fields.Integer(string='Resultado')
 	puntuacion_local = fields.Integer(string='Puntuación local')
 	puntuacion_visitante = fields.Integer(string='Puntuación visitante')
 	
     #campos calculados para una proxima entrega
     #ganador
 
-    # Relaciones que hice sin darme cuenta que eran para otra entrega
-torneo_id = fields.Many2one('esports.tournament', string="Torneo")
-participante_local = fields.Many2one('res.partner', string='Participante local')
-participante_visitante = fields.Many2one('res.partner', string='Participante visitante')
+	# Relaciones que hice sin darme cuenta que eran para otra entrega
+	torneo_id = fields.Many2one('esports.tournament', string='Torneo')
+	participante_local = fields.Many2one('res.partner', string='Participante local')
+	participante_visitante = fields.Many2one('res.partner', string='Participante visitante')

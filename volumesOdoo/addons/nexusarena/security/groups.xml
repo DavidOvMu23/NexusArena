@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data noupdate="1">
     <!-- Grupo: Administrador de Torneos -->
     <record id="group_tourney_admin" model="res.groups">
         <field name="name">Administrador de Torneos</field>
@@ -14,4 +15,5 @@
     <record id="group_tourney_participant" model="res.groups">
         <field name="name">Participante</field>
     </record>
+    </data>
 </odoo>
