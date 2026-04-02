@@ -13,6 +13,12 @@ class EsportsRegistration(models.Model):
         ('pending', 'Pendiente de Pago'), ('confirmed', 'Confirmada'), ('disqualified', 'Descalificada')
     ], default='pending')
 
-    # Relaciones
+    # Campos calculados para una proxima entrega
+    # dias_desde_inscripcion
+
+    # la restricción que pide el enunciado de que un participante no pueda 
+    # inscribirse dos veces en el mismo torneo no se hacela todavía, de momento no lo pongo
+
+    # Relaciones que hice sin darme cuenta que eran para otra entrega
     torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)

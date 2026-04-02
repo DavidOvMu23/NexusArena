@@ -6,30 +6,30 @@ class EsportsTournament(models.Model):
     _description = 'Torneo de eSports'
 
     #Campos
-    nombre = fields.Char(string="Nombre del Torneo", required=True)
-    edicion = fields.Char(string="Edición (Año)", required=True)
+    nombre = fields.Char(string="Nombre del Torneo")
+    edicion = fields.Char(string="Edición (Año)")
 
     formato = fields.Selection([
         ('league', 'Liga'),
         ('direct', 'Eliminación Directa'),
-        ('double', 'Doble Eliminación')
-    ], string="Formato", default='league', required=True)
+        ('double', 'Doble Eliminación'),
+    ], string="Formato", default='league')
 
     modalidad = fields.Selection([
         ('presencial', 'Presencial'),
         ('online', 'Online'),
-        ('hibrido', 'Híbrido')
-    ], string="Modalidad", required=True)
+        ('hibrido', 'Híbrido'),
+    ], string="Modalidad")
 
-    fecha_inicio = fields.Date(string="Fecha de Inicio", required=True)
-    fecha_fin = fields.Date(string="Fecha de Fin", required=True)
+    fecha_inicio = fields.Date(string="Fecha de Inicio")
+    fecha_fin = fields.Date(string="Fecha de Fin")
 
-    premio_total = fields.Float(string="Premio Total (€)", required=True)
-    premio_1 = fields.Float(string="1er Puesto (€)", required=True)
-    premio_2 = fields.Float(string="2º Puesto (€)", required=True)
-    premio_3 = fields.Float(string="3er Puesto (€)", required=True)
+    premio_total = fields.Float(string="Premio Total (€)")
+    premio_1 = fields.Float(string="1er Puesto (€)")
+    premio_2 = fields.Float(string="2º Puesto (€)")
+    premio_3 = fields.Float(string="3er Puesto (€)")
 
-    cuota = fields.Float(string="Cuota de Inscripción", required=True)
+    cuota_inscripcion = fields.Float(string="Cuota de Inscripción")
 
     estado = fields.Selection([
         ('draft', 'Borrador'),
@@ -37,9 +37,15 @@ class EsportsTournament(models.Model):
         ('ongoing', 'En Curso'),
         ('done', 'Finalizado'),
         ('cancel', 'Cancelado')
-    ], string="Estado", default='draft', required=True)
+    ], string="Estado", default='draft')
 
-    #Relaciones
+    #Campos calculados para una proxima entrega
+    #lineas_inscripcion
+    #partidas_torneo
+    #numero_participantes
+    #ingresos_totales
+
+    #Relaciones que hice sin darme cuenta que eran para otra entrega
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)
     inscripcion_ids = fields.One2many('esports.registration', 'torneo_id', string="Líneas de Inscripción")
     partida_ids = fields.One2many('esports.match', 'torneo_id', string="Partidas del Torneo")

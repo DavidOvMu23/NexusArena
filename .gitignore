@@ -1,3 +1,4 @@
 /volumesOdoo/dataPostgreSQL
 /volumesOdoo/odoo
 .DS_Store
+__pycache__

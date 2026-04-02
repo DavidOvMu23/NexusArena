@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- REGLA DE REGISTRO PARA PARTICIPANTE -->
+
+    <!-- No se si está bien, por que no recuerdo que dieramos esto en clase
+    ni en el tutorial guiado que dimos en la pagina de odoo que tuvimos que entregar -->
+    
+    <!-- Los participantes solo ven sus propias inscripciones -->
+    <!-- Nota: user.partner_id es el partner asociado al usuario actual -->
+    <record id="rule_registration_participant" model="ir.rule">
+        <field name="name">Participante: Solo sus propias inscripciones</field>
+        <field name="model_id" ref="model_esports_registration"/>
+        <field name="groups" eval="[(4, ref('group_tourney_participant'))]"/>
+        <field name="domain_force">[('participante_id', '=', user.partner_id.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>

@@ -6,19 +6,22 @@ class EsportsGame(models.Model):
     _description = 'Videojuego de eSports'
 
     #Campos
-    nombre = fields.Char(string="Nombre del Juego", required=True)
+    nombre = fields.Char(string="Nombre del Juego")
 
     genero = fields.Selection([
         ('moba', 'MOBA'), ('fps', 'FPS'), ('lucha', 'Lucha'),
         ('deportes', 'Deportes'), ('br', 'Battle Royale'), ('estrategia', 'Estrategia'), ('otro', 'Otro')
-    ], string="Género", required=True)
+    ], string="Género")
 
-    desarrollador = fields.Char(string="Desarrollador", required=True)
+    desarrollador = fields.Char(string="Desarrollador")
 
     modalidad = fields.Selection([
         ('individual', 'Individual'), ('teams', 'Equipos'), ('both', 'Ambas')
-    ], string="Modalidad", default='both', required=True)
+    ], string="Modalidad", default='both')
 
-    max_jugadores_equipo = fields.Integer(string="Máx. Jugadores por Equipo", required=True)
+    max_jugadores_equipo = fields.Integer(string="Máx. Jugadores por Equipo")
 
-    imagen = fields.Image(string="Logo/Imagen", required=True)
+    imagen = fields.Image(string="Logo/Imagen")
+
+    #Campo calculado para una proxima entrega
+    #torneos_activos
