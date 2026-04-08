@@ -1,7 +1,8 @@
 from odoo import models, fields
 
+
 class EsportsStanding(models.Model):
-    # Nombre del modelo y descripción
+    # Tabla de clasificación final de participantes por torneo.
     _name = 'esports.standing'
     _description = 'Clasificación del Torneo'
     

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!-- Estas son las vistas para las inscripciones de esports -->
+    <!-- Vistas base del modelo esports.registration (inscripciones). -->
+
+    <!-- Vista de lista para ver las inscripciones. -->
     <record id="view_esports_registration_list" model="ir.ui.view">
         <field name="name">esports.registration.list</field>
         <field name="model">esports.registration</field>
@@ -14,7 +16,7 @@
         </field>
     </record>
 
-    <!-- Vista de formulario para las inscripciones -->
+    <!-- Vista de formulario para alta/edición de inscripciones. -->
     <record id="view_esports_registration_form" model="ir.ui.view">
         <field name="name">esports.registration.form</field>
         <field name="model">esports.registration</field>
@@ -36,7 +38,7 @@
         </field>
     </record>
 
-        <!-- Vista de búsqueda para las inscripciones -->
+    <!-- Vista de búsqueda con filtros por estado de inscripción. -->
     <record id="view_esports_registration_search" model="ir.ui.view">
         <field name="name">esports.registration.search</field>
         <field name="model">esports.registration</field>

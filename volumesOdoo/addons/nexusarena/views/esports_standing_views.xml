@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!-- Estas son las vistas para las clasificaciones de esports -->
+    <!-- Vistas base del modelo esports.standing (clasificaciones). -->
+
+    <!-- Vista de lista para ranking final por torneo/participante. -->
     <record id="view_esports_standing_list" model="ir.ui.view">
         <field name="name">esports.standing.list</field>
         <field name="model">esports.standing</field>
@@ -36,7 +38,7 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda para las clasificaciones -->
+    <!-- Vista de búsqueda para filtrar clasificaciones. -->
     <record id="view_esports_standing_search" model="ir.ui.view">
         <field name="name">esports.standing.search</field>
         <field name="model">esports.standing</field>

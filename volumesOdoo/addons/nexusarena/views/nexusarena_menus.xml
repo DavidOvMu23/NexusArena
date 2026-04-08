@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- estos son los menus que se van a mostrar en la interfaz -->
+    <!-- Menú raíz del módulo en la barra principal de Odoo. -->
     <menuitem id="menu_nexusarena_root" name="Nexus Arena" sequence="10"/>
 
+    <!-- Menús de primer nivel según las secciones del proyecto. -->
     <menuitem id="menu_nexusarena_torneos" name="Torneos" parent="menu_nexusarena_root" sequence="10"/>
     <menuitem id="menu_nexusarena_competicion" name="Competición" parent="menu_nexusarena_root" sequence="20"/>
     <menuitem id="menu_nexusarena_participantes" name="Participantes" parent="menu_nexusarena_root" action="action_esports_participant" sequence="30"/>
     <menuitem id="menu_nexusarena_administracion" name="Administración" parent="menu_nexusarena_root" sequence="40"/>
 
+    <!-- Menús hijos para navegación funcional por cada sección. -->
     <menuitem id="menu_nexusarena_torneos_torneos" name="Torneos" parent="menu_nexusarena_torneos" action="action_esports_tournament" sequence="10"/>
     <menuitem id="menu_nexusarena_torneos_inscripciones" name="Inscripciones" parent="menu_nexusarena_torneos" action="action_esports_registration" sequence="20"/>
 

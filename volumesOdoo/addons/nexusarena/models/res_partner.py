@@ -1,12 +1,11 @@
 from odoo import models, fields
 
+
 class ResPartner(models.Model):
     #Usamos el modelo contactos de Odoo y a partir de ahí añadimos el resto de campos
     #que nos interesen, en nuestro caso, los relacionados con los participantes
 
-    _inherit = 'res.partner' # Heredamos de el modelo
-
-    #CCampos
+    # Datos competitivos de un participante
     tipo_jugador = fields.Selection([
         ('jugador', 'Jugador Individual'),
         ('equipo', 'Equipo Competitivo'),

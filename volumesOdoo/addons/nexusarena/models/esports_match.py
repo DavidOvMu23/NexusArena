@@ -1,12 +1,12 @@
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
+
 
 class EsportsMatch(models.Model):
     # Nombre del modelo y descripción
 	_name = 'esports.match'
 	_description = 'Partida de eSports'
 
-    # Campos
+	# Campos de la partida.
 	fase = fields.Selection([
 		('groups', 'Grupos'),
 		('quarterfinal', 'Cuartos'),
@@ -17,6 +17,7 @@ class EsportsMatch(models.Model):
 
 	fecha_hora_programada = fields.Datetime(string='Fecha y hora programada')
 
+	# Estado de la partida.
 	estado = fields.Selection([
 		('scheduled', 'Programada'),
 		('playing', 'En juego'),
@@ -27,7 +28,7 @@ class EsportsMatch(models.Model):
 	resultado = fields.Integer(string='Resultado')
 	puntuacion_local = fields.Integer(string='Puntuación local')
 	puntuacion_visitante = fields.Integer(string='Puntuación visitante')
-	
+
     #campos calculados para una proxima entrega
     #ganador
 

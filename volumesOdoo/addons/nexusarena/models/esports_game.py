@@ -1,11 +1,12 @@
 from odoo import models, fields
 
+
 class EsportsGame(models.Model):
-    #Nombre del modelo y descripción
+    # Modelo de videojuegos
     _name = 'esports.game'
     _description = 'Videojuego de eSports'
 
-    #Campos
+    # Datos del videojuego.
     nombre = fields.Char(string="Nombre del Juego")
 
     genero = fields.Selection([
@@ -23,5 +24,5 @@ class EsportsGame(models.Model):
 
     imagen = fields.Image(string="Logo/Imagen")
 
-    #Campo calculado para una proxima entrega
-    #torneos_activos
+    # Campo calculado reservado para fases posteriores.
+    # torneos_activos

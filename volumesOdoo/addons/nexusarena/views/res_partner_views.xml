@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!-- Estas son las vistas para los participantes de esports -->
+    <!-- Vistas de participantes sobre res.partner extendido por el módulo. -->
 
     <!-- Vista de lista para los participantes -->
     <record id="view_esports_participant_list" model="ir.ui.view">
