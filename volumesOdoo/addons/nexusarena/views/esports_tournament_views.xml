@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!-- Estas son las vistas para los torneos de esports -->
+    <!-- Vistas base del modelo esports.tournament (torneos). -->
+
+    <!-- Vista de lista para ver los torneos. -->
     <record id="view_esports_tournament_list" model="ir.ui.view">
         <field name="name">esports.tournament.list</field>
         <field name="model">esports.tournament</field>

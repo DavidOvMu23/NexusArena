@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!-- Estas son las vistas para las partidas de esports -->
+    <!-- Vistas base del modelo esports.match (partidas). -->
+
+    <!-- Vista de lista para ver las partidas. -->
     <record id="view_esports_match_list" model="ir.ui.view">
         <field name="name">esports.match.list</field>
         <field name="model">esports.match</field>
@@ -45,7 +47,7 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda para las partidas -->
+    <!-- Vista de búsqueda con filtros por estado de la partida. -->
     <record id="view_esports_match_search" model="ir.ui.view">
         <field name="name">esports.match.search</field>
         <field name="model">esports.match</field>

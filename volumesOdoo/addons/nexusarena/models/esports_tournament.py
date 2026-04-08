@@ -1,11 +1,12 @@
 from odoo import models, fields
 
+
 class EsportsTournament(models.Model):
-    #Nombre del modelo y descripción
+    # Modelo torneos.
     _name = 'esports.tournament'
     _description = 'Torneo de eSports'
 
-    #Campos
+    # Datos de el torneo
     nombre = fields.Char(string="Nombre del Torneo")
     edicion = fields.Char(string="Edición (Año)")
 
@@ -31,6 +32,7 @@ class EsportsTournament(models.Model):
 
     cuota_inscripcion = fields.Float(string="Cuota de Inscripción")
 
+    # Estado del torneo.
     estado = fields.Selection([
         ('draft', 'Borrador'),
         ('open', 'Inscripciones Abiertas'),
@@ -39,11 +41,11 @@ class EsportsTournament(models.Model):
         ('cancel', 'Cancelado')
     ], string="Estado", default='draft')
 
-    #Campos calculados para una proxima entrega
-    #lineas_inscripcion
-    #partidas_torneo
-    #numero_participantes
-    #ingresos_totales
+    # Campos calculados reservados para fases posteriores.
+    # lineas_inscripcion
+    # partidas_torneo
+    # numero_participantes
+    # ingresos_totales
 
     #Relaciones que hice sin darme cuenta que eran para otra entrega
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)

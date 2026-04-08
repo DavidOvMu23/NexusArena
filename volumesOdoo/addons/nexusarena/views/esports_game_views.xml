@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Estas son las vistas para los videojuegos de esports -->
+    <!-- Vistas base del modelo esports.game (videojuegos). -->
+
+    <!-- Vista de lista para consultar los videojuegos. -->
     <record id="view_esports_game_list" model="ir.ui.view">
         <field name="name">esports.game.list</field>
         <field name="model">esports.game</field>
@@ -15,7 +17,7 @@
         </field>
     </record>
 
-    <!-- Vista de formulario para los videojuegos -->
+    <!-- Vista de formulario para crear/editar un videojuego. -->
     <record id="view_esports_game_form" model="ir.ui.view">
         <field name="name">esports.game.form</field>
         <field name="model">esports.game</field>
@@ -39,7 +41,7 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda para los videojuegos -->
+    <!-- Vista de búsqueda con filtros por género y modalidad. -->
     <record id="view_esports_game_search" model="ir.ui.view">
         <field name="name">esports.game.search</field>
         <field name="model">esports.game</field>
