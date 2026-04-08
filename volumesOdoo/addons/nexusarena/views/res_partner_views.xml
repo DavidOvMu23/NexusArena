@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Estas son las vistas para los participantes de esports -->
+
+    <!-- Vista de lista para los participantes -->
+    <record id="view_esports_participant_list" model="ir.ui.view">
+        <field name="name">res.partner.esports.participant.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Participantes">
+                <field name="name"/>
+                <field name="nick"/>
+                <field name="tipo_jugador"/>
+                <field name="pais_origen"/>
+                <field name="plataforma"/>
+                <field name="experiencia"/>
+                <field name="email"/>
+                <field name="phone"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario para los participantes -->
+    <record id="view_esports_participant_form" model="ir.ui.view">
+        <field name="name">res.partner.esports.participant.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Participante">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="nick"/>
+                            <field name="tipo_jugador"/>
+                            <field name="experiencia"/>
+                        </group>
+                        <group>
+                            <field name="pais_origen"/>
+                            <field name="plataforma"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda para los participantes -->
+    <record id="view_esports_participant_search" model="ir.ui.view">
+        <field name="name">res.partner.esports.participant.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Participantes">
+                <field name="name"/>
+                <field name="nick"/>
+                <field name="tipo_jugador"/>
+                <field name="plataforma"/>
+                <field name="experiencia"/>
+                <filter string="Jugador" name="filter_jugador" domain="[('tipo_jugador', '=', 'jugador')]"/>
+                <filter string="Equipo" name="filter_equipo" domain="[('tipo_jugador', '=', 'equipo')]"/>
+                <separator/>
+                <filter string="PC" name="filter_plataforma_pc" domain="[('plataforma', '=', 'pc')]"/>
+                <filter string="Consola" name="filter_plataforma_console" domain="[('plataforma', '=', 'console')]"/>
+                <filter string="Móvil" name="filter_plataforma_mobile" domain="[('plataforma', '=', 'mobile')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Estas son las distintas acciones para cambiar entre los tipos de vistas-->
+    <record id="action_esports_participant" model="ir.actions.act_window">
+        <field name="name">Participantes</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('tipo_jugador', '!=', False)]</field>
+        <field name="context">{'default_tipo_jugador': 'jugador'}</field>
+        <field name="search_view_id" ref="view_esports_participant_search"/>
+    </record>
+
+    <record id="action_esports_participant_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_esports_participant_list"/>
+        <field name="act_window_id" ref="action_esports_participant"/>
+    </record>
+
+    <record id="action_esports_participant_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_esports_participant_form"/>
+        <field name="act_window_id" ref="action_esports_participant"/>
+    </record>
+</odoo>
