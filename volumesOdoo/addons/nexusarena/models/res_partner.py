@@ -2,6 +2,8 @@ from odoo import models, fields
 
 
 class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
     #Usamos el modelo contactos de Odoo y a partir de ahí añadimos el resto de campos
     #que nos interesen, en nuestro caso, los relacionados con los participantes
 
@@ -31,3 +33,25 @@ class ResPartner(models.Model):
     #Campo calculado para una proxima entrega
     #total_participaciones
     #total_victorias
+
+    # Relaciones
+    juego_principal_id = fields.Many2one('esports.game', string='Juego principal')
+    inscripcion_ids = fields.One2many('esports.registration', 'participante_id', string='Inscripciones')
+    clasificacion_ids = fields.One2many('esports.standing', 'participante_id', string='Clasificaciones')
+    partida_local_ids = fields.One2many('esports.match', 'participante_local', string='Partidas como local')
+    partida_visitante_ids = fields.One2many('esports.match', 'participante_visitante', string='Partidas como visitante')
+    juego_gestionado_ids = fields.One2many('esports.game', 'gestor_id', string='Juegos gestionados')
+    torneo_ids = fields.Many2many(
+        'esports.tournament',
+        'esports_tournament_partner_rel',
+        'partner_id',
+        'tournament_id',
+        string='Torneos',
+    )
+    juego_ids = fields.Many2many(
+        'esports.game',
+        'esports_game_partner_rel',
+        'partner_id',
+        'game_id',
+        string='Videojuegos',
+    )

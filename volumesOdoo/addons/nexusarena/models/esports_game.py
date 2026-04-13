@@ -26,3 +26,14 @@ class EsportsGame(models.Model):
 
     # Campo calculado reservado para fases posteriores.
     # torneos_activos
+
+    # Relaciones
+    gestor_id = fields.Many2one('res.partner', string='Responsable')
+    torneo_ids = fields.One2many('esports.tournament', 'videojuego_id', string='Torneos')
+    participante_ids = fields.Many2many(
+        'res.partner',
+        'esports_game_partner_rel',
+        'game_id',
+        'partner_id',
+        string='Participantes frecuentes',
+    )

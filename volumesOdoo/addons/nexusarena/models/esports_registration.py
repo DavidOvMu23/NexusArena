@@ -20,6 +20,14 @@ class EsportsRegistration(models.Model):
     # la restricción que pide el enunciado de que un participante no pueda 
     # inscribirse dos veces en el mismo torneo no se hacela todavía, de momento no lo pongo
 
-    # Relaciones que hice sin darme cuenta que eran para otra entrega
+    # Relaciones
     torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)
+    standing_ids = fields.One2many('esports.standing', 'inscripcion_id', string='Clasificación asociada')
+    miembro_ids = fields.Many2many(
+        'res.partner',
+        'esports_registration_member_rel',
+        'registration_id',
+        'partner_id',
+        string='Miembros del equipo',
+    )

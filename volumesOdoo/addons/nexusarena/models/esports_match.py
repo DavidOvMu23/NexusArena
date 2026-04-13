@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class EsportsMatch(models.Model):
-    # Nombre del modelo y descripción
+	# Nombre del modelo y descripción
 	_name = 'esports.match'
 	_description = 'Partida de eSports'
 
@@ -29,10 +29,18 @@ class EsportsMatch(models.Model):
 	puntuacion_local = fields.Integer(string='Puntuación local')
 	puntuacion_visitante = fields.Integer(string='Puntuación visitante')
 
-    #campos calculados para una proxima entrega
-    #ganador
+	# campos calculados para una proxima entrega
+	# ganador
 
-	# Relaciones que hice sin darme cuenta que eran para otra entrega
+	# Relaciones
 	torneo_id = fields.Many2one('esports.tournament', string='Torneo')
 	participante_local = fields.Many2one('res.partner', string='Participante local')
 	participante_visitante = fields.Many2one('res.partner', string='Participante visitante')
+	standing_ids = fields.One2many('esports.standing', 'partida_final_id', string='Clasificación asociada')
+	arbitro_ids = fields.Many2many(
+		'res.partner',
+		'esports_match_referee_rel',
+		'match_id',
+		'partner_id',
+		string='Árbitros',
+	)

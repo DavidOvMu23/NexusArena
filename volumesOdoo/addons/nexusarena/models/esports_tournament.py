@@ -47,7 +47,15 @@ class EsportsTournament(models.Model):
     # numero_participantes
     # ingresos_totales
 
-    #Relaciones que hice sin darme cuenta que eran para otra entrega
+    # Relaciones
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)
     inscripcion_ids = fields.One2many('esports.registration', 'torneo_id', string="Líneas de Inscripción")
     partida_ids = fields.One2many('esports.match', 'torneo_id', string="Partidas del Torneo")
+    standing_ids = fields.One2many('esports.standing', 'torneo_id', string='Clasificación final')
+    participante_ids = fields.Many2many(
+        'res.partner',
+        'esports_tournament_partner_rel',
+        'tournament_id',
+        'partner_id',
+        string='Participantes',
+    )

@@ -16,7 +16,18 @@ class EsportsStanding(models.Model):
     # puntos_acumulados
     # premio_obtenido
 
-    # Relaciones que hice sin darme cuenta que eran para otra entrega
+    # Relaciones
     torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)
+    inscripcion_id = fields.Many2one('esports.registration', string='Inscripción')
+    partida_final_id = fields.Many2one('esports.match', string='Partida final')
+    parent_standing_id = fields.Many2one('esports.standing', string='Clasificación padre')
+    child_standing_ids = fields.One2many('esports.standing', 'parent_standing_id', string='Subclasificaciones')
+    partida_ids = fields.Many2many(
+        'esports.match',
+        'esports_standing_match_rel',
+        'standing_id',
+        'match_id',
+        string='Partidas computadas',
+    )
     factura_id = fields.Many2one('account.move', string="Factura de Premio", readonly=True)
