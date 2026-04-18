@@ -4,16 +4,21 @@
 
     <!-- No se si está bien, por que no recuerdo que dieramos esto en clase
     ni en el tutorial guiado que dimos en la pagina de odoo que tuvimos que entregar -->
-    
-    <!-- Participante solo puede leer sus propias inscripciones. -->
-    <!-- Se compara participante_id con el partner asociado al usuario logueado. -->
 
-    <!-- Nota: user.partner_id es el partner asociado al usuario actual -->
+    <!--Ponemos ir.rule para hacer que odoo interprete esto como una regla de acceso -->
     <record id="rule_registration_participant" model="ir.rule">
         <field name="name">Participante: Solo sus propias inscripciones</field>
+
+        <!--Referencia al modelo de inscripciones, que es el que queremos restringir -->
         <field name="model_id" ref="model_esports_registration"/>
+
+        <!--Asignamos esta regla al grupo de participantes-->
         <field name="groups" eval="[(4, ref('group_tourney_participant'))]"/>
+
+        <!--Hacemos la comprobacion de que el participante sea el propietario de la inscripcion-->
         <field name="domain_force">[('participante_id', '=', user.partner_id.id)]</field>
+
+        <!--Le aplicamos los permisos, en nuestro caso de solo lectura-->
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>

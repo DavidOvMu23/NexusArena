@@ -3,7 +3,7 @@
     <!-- Vistas base del modelo esports.standing (clasificaciones). -->
 
     <!-- Vista de lista para ranking final por torneo/participante. -->
-    <record id="view_esports_standing_list" model="ir.ui.view">
+    <record id="view_esports_standing_list" model="ir.ui.view"> <!-- ir.ui.view indica a odoo que lo que estamos haciendo es una vista-->
         <field name="name">esports.standing.list</field>
         <field name="model">esports.standing</field>
         <field name="arch" type="xml">
@@ -52,11 +52,11 @@
     </record>
 
     <!-- Estas son las distintas acciones para cambiar entre los tipos de vistas-->
-    <record id="action_esports_standing" model="ir.actions.act_window">
-        <field name="name">Clasificaciones</field>
-        <field name="res_model">esports.standing</field>
-        <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_esports_standing_search"/>
+    <record id="action_esports_standing" model="ir.actions.act_window"> <!-- ir.actions.act_window indica a odoo que lo que estamos haciendo es una acción de ventana-->
+        <field name="name">Clasificaciones</field> <!--nombre de la acción que aparecerá en el menú-->
+        <field name="res_model">esports.standing</field> <!--indicamos el modelo al que se aplicará la acción-->
+        <field name="view_mode">list,form</field> <!--indicamos los modos de vista disponibles-->
+        <field name="search_view_id" ref="view_esports_standing_search"/> <!--referenciamos la vista de búsqueda personalizada para clasificaciones-->
     </record>
 
     <record id="action_esports_standing_list_view" model="ir.actions.act_window.view">
