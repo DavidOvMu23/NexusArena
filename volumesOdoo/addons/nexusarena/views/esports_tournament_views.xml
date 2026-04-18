@@ -21,6 +21,42 @@
         </field>
     </record>
 
+    <!-- Vista kanban para los torneos -->
+    <record id="view_esports_tournament_kanban" model="ir.ui.view">
+        <field name="name">esports.tournament.kanban</field>
+        <field name="model">esports.tournament</field>
+        <field name="arch" type="xml">
+            <kanban string="Torneos">
+                <field name="nombre"/>
+                <field name="videojuego_id"/>
+                <field name="videojuego_imagen"/>
+                <field name="estado"/>
+                <field name="inscripcion_ids"/>
+                <templates> <!-- Aquí definimos la plantilla para cada tarjeta del kanban -->
+                    <t t-name="card"> <!-- t-name="card" es el nombre de la plantilla que se usará para cada registro en la vista kanban -->
+                        <main class="o_kanban_card_content"> 
+                            <div class="d-flex align-items-center mb-2">
+                                <field name="videojuego_imagen" widget="image" class="me-2" options="{'size': [48, 48]}"/>
+                                <div>
+                                    <strong><field name="nombre"/></strong>
+                                    <div class="text-muted"><field name="videojuego_id"/></div>
+                                </div>
+                            </div>
+                            <div class="mb-1">
+                                <strong>Estado:</strong>
+                                <field name="estado"/>
+                            </div>
+                            <div>
+                                <strong>Participantes:</strong>
+                                <span t-esc="record.inscripcion_ids.raw_value.length"/>
+                            </div>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <!-- Vista de formulario para los torneos -->
     <record id="view_esports_tournament_form" model="ir.ui.view">
         <field name="name">esports.tournament.form</field>
@@ -83,19 +119,26 @@
     <record id="action_esports_tournament" model="ir.actions.act_window"> <!-- ir.actions.act_window indica a odoo que lo que estamos haciendo es una acción de ventana-->
         <field name="name">Torneos</field> <!--nombre de la acción que aparecerá en el menú-->
         <field name="res_model">esports.tournament</field> <!--indicamos el modelo al que se refiere la acción-->
-        <field name="view_mode">list,form</field> <!--indicamos los modos de vista disponibles-->
+        <field name="view_mode">kanban,list,form</field> <!--indicamos los modos de vista disponibles-->
         <field name="search_view_id" ref="view_esports_tournament_search"/> <!--referenciamos la vista de búsqueda personalizada-->
     </record>
 
-    <record id="action_esports_tournament_list_view" model="ir.actions.act_window.view">
+    <record id="action_esports_tournament_kanban_view" model="ir.actions.act_window.view">
         <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_esports_tournament_kanban"/>
+        <field name="act_window_id" ref="action_esports_tournament"/>
+    </record>
+
+    <record id="action_esports_tournament_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
         <field name="view_mode">list</field>
         <field name="view_id" ref="view_esports_tournament_list"/>
         <field name="act_window_id" ref="action_esports_tournament"/>
     </record>
 
     <record id="action_esports_tournament_form_view" model="ir.actions.act_window.view">
-        <field name="sequence" eval="2"/>
+        <field name="sequence" eval="3"/>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_esports_tournament_form"/>
         <field name="act_window_id" ref="action_esports_tournament"/>

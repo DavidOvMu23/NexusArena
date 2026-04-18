@@ -43,6 +43,7 @@ class EsportsTournament(models.Model):
 
     # Relaciones
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)
+    videojuego_imagen = fields.Image(related='videojuego_id.imagen', string='Imagen del juego', readonly=True)
     inscripcion_ids = fields.One2many('esports.registration', 'torneo_id', string="Líneas de Inscripción")
     partida_ids = fields.One2many('esports.match', 'torneo_id', string="Partidas del Torneo")
     standing_ids = fields.One2many('esports.standing', 'torneo_id', string='Clasificación final')
