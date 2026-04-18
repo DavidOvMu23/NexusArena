@@ -41,12 +41,6 @@ class EsportsTournament(models.Model):
         ('cancel', 'Cancelado')
     ], string="Estado", default='draft')
 
-    # Campos calculados reservados para fases posteriores.
-    # lineas_inscripcion
-    # partidas_torneo
-    # numero_participantes
-    # ingresos_totales
-
     # Relaciones
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)
     inscripcion_ids = fields.One2many('esports.registration', 'torneo_id', string="Líneas de Inscripción")
@@ -59,3 +53,9 @@ class EsportsTournament(models.Model):
         'partner_id',
         string='Participantes',
     )
+
+    # Campos calculados reservados para fases posteriores.
+    # lineas_inscripcion
+    # partidas_torneo
+    # numero_participantes
+    # ingresos_totales

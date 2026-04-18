@@ -25,21 +25,19 @@ class ResPartner(models.Model):
         ('amateur', 'Amateur'), ('pro', 'Profesional'), ('semi', 'Semiprofesional')
     ], string="Nivel de Experiencia", required=True)
 
-    #Lo que pone en el enunciado de "para equipos", todavía no se hacerlo
-    #entonces de momento no lo pongo, pero la idea sería que si el tipo de jugador es "equipo", 
-    #entonces aparezca un campo para añadir los miembros del equipo, que podrían ser otros contactos de Odoo, 
-    #y si el tipo de jugador es "jugador individual", entonces ese campo no aparezca.
-
-    #Campo calculado para una proxima entrega
-    #total_participaciones
-    #total_victorias
-
     # Relaciones
     juego_principal_id = fields.Many2one('esports.game', string='Juego principal')
     inscripcion_ids = fields.One2many('esports.registration', 'participante_id', string='Inscripciones')
     clasificacion_ids = fields.One2many('esports.standing', 'participante_id', string='Clasificaciones')
     partida_local_ids = fields.One2many('esports.match', 'participante_local', string='Partidas como local')
     partida_visitante_ids = fields.One2many('esports.match', 'participante_visitante', string='Partidas como visitante')
+    partida_arbitro_ids = fields.Many2many(
+        'esports.match',
+        'esports_match_referee_rel',
+        'partner_id',
+        'match_id',
+        string='Partidas arbitradas',
+    )
     juego_gestionado_ids = fields.One2many('esports.game', 'gestor_id', string='Juegos gestionados')
     torneo_ids = fields.Many2many(
         'esports.tournament',
@@ -55,3 +53,20 @@ class ResPartner(models.Model):
         'game_id',
         string='Videojuegos',
     )
+    miembro_en_inscripcion_ids = fields.Many2many(
+        'esports.registration',
+        'esports_registration_member_rel',
+        'partner_id',
+        'registration_id',
+        string='Inscripciones como miembro de equipo',
+    )
+
+
+    #Lo que pone en el enunciado de "para equipos", todavía no se hacerlo
+    #entonces de momento no lo pongo, pero la idea sería que si el tipo de jugador es "equipo", 
+    #entonces aparezca un campo para añadir los miembros del equipo, que podrían ser otros contactos de Odoo, 
+    #y si el tipo de jugador es "jugador individual", entonces ese campo no aparezca.
+
+    #Campo calculado para una proxima entrega
+    #total_participaciones
+    #total_victorias

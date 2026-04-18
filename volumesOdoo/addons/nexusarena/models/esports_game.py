@@ -24,9 +24,6 @@ class EsportsGame(models.Model):
 
     imagen = fields.Image(string="Logo/Imagen")
 
-    # Campo calculado reservado para fases posteriores.
-    # torneos_activos
-
     # Relaciones
     gestor_id = fields.Many2one('res.partner', string='Responsable')
     torneo_ids = fields.One2many('esports.tournament', 'videojuego_id', string='Torneos')
@@ -37,3 +34,6 @@ class EsportsGame(models.Model):
         'partner_id',
         string='Participantes frecuentes',
     )
+
+    # Campo calculado reservado para fases posteriores.
+    # torneos_activos
