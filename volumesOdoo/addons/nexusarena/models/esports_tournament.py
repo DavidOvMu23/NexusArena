@@ -5,6 +5,7 @@ class EsportsTournament(models.Model):
     # Modelo torneos.
     _name = 'esports.tournament'
     _description = 'Torneo de eSports'
+    _rec_name = 'nombre'
 
     # Datos de el torneo
     nombre = fields.Char(string="Nombre del Torneo")

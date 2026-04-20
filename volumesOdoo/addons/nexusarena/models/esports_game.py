@@ -5,6 +5,7 @@ class EsportsGame(models.Model):
     # Modelo de videojuegos
     _name = 'esports.game'
     _description = 'Videojuego de eSports'
+    _rec_name = 'nombre'
 
     # Datos del videojuego.
     nombre = fields.Char(string="Nombre del Juego")
