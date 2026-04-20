@@ -14,6 +14,9 @@
         'views/res_partner_views.xml',
         'views/nexusarena_menus.xml',
     ],
+    'demo': [
+        'demo/nexusarena_demo.xml',
+    ],
     'installable': True,
     'application': True,
 }
