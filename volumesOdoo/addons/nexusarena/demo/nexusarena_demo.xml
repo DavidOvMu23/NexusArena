@@ -1,3 +1,7 @@
+<!-- Archivo de datos demo para NexusArena-->
+<!-- Para cargarlos la forma mas facil es que a la hora de crear
+la base de datos le des al checkbox de "Cargar datos demo" -->
+
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
