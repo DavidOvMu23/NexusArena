@@ -37,4 +37,4 @@ class EsportsGame(models.Model):
     )
 
     # Campo calculado reservado para fases posteriores.
-    # torneos_activos
+    # torneos_actives

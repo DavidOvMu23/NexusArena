@@ -15,7 +15,7 @@
                 <field name="modalidad"/>
                 <field name="fecha_inicio"/>
                 <field name="fecha_fin"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="premio_total"/>
             </list>
         </field>
@@ -30,7 +30,7 @@
                 <field name="nombre"/>
                 <field name="videojuego_id"/>
                 <field name="videojuego_imagen"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="inscripcion_ids"/>
                 <templates> <!-- Aquí definimos la plantilla para cada tarjeta del kanban -->
                     <t t-name="card"> <!-- t-name="card" es el nombre de la plantilla que se usará para cada registro en la vista kanban -->
@@ -43,8 +43,8 @@
                                 </div>
                             </div>
                             <div class="mb-1">
-                                <strong>Estado:</strong>
-                                <field name="estado"/>
+                                <strong>state:</strong>
+                                <field name="state"/>
                             </div>
                             <div>
                                 <strong>Participantes:</strong>
@@ -69,7 +69,7 @@
                             <field name="nombre"/>
                             <field name="edicion"/>
                             <field name="videojuego_id"/>
-                            <field name="estado"/>
+                            <field name="state"/>
                         </group>
                         <group>
                             <field name="formato"/>
@@ -98,12 +98,12 @@
             <search string="Buscar Torneos">
                 <field name="nombre"/>
                 <field name="videojuego_id"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="formato"/>
-                <filter string="Borrador" name="filter_estado_draft" domain="[('estado', '=', 'draft')]"/>
-                <filter string="Inscripciones Abiertas" name="filter_estado_open" domain="[('estado', '=', 'open')]"/>
-                <filter string="En Curso" name="filter_estado_ongoing" domain="[('estado', '=', 'ongoing')]"/>
-                <filter string="Finalizado" name="filter_estado_done" domain="[('estado', '=', 'done')]"/>
+                <filter string="Borrador" name="filter_state_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Inscripciones Abiertas" name="filter_state_open" domain="[('state', '=', 'open')]"/>
+                <filter string="En Curso" name="filter_state_ongoing" domain="[('state', '=', 'ongoing')]"/>
+                <filter string="Finalizado" name="filter_state_done" domain="[('state', '=', 'done')]"/>
                 <separator/>
                 <filter string="Con Videojuego" name="filter_videojuego_set" domain="[('videojuego_id', '!=', False)]"/>
                 <filter string="Agrupar por Videojuego" name="group_by_videojuego" context="{'group_by': 'videojuego_id'}"/>

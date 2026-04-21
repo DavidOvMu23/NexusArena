@@ -2,7 +2,6 @@
 <!-- Para cargarlos la forma mas facil es que a la hora de crear
 la base de datos le des al checkbox de "Cargar datos demo" -->
 
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
 
@@ -236,7 +235,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_2">2500</field>
             <field name="premio_3">1000</field>
             <field name="cuota_inscripcion">35</field>
-            <field name="estado">done</field>
+            <field name="state">done</field>
             <field name="videojuego_id" ref="game_01_lol"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_01_alpha_wolves'), ref('participant_02_kraken_five'), ref('participant_03_red_hawks'), ref('participant_04_titan_unit')])]"/>
         </record>
@@ -252,7 +251,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_2">1500</field>
             <field name="premio_3">500</field>
             <field name="cuota_inscripcion">20</field>
-            <field name="estado">done</field>
+            <field name="state">done</field>
             <field name="videojuego_id" ref="game_02_valorant"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_05_neon_blade'), ref('participant_06_ice_zen'), ref('participant_09_nova'), ref('participant_10_ghost')])]"/>
         </record>
@@ -268,7 +267,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_2">600</field>
             <field name="premio_3">200</field>
             <field name="cuota_inscripcion">10</field>
-            <field name="estado">ongoing</field>
+            <field name="state">ongoing</field>
             <field name="videojuego_id" ref="game_03_eafc25"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen')])]"/>
         </record>
@@ -284,7 +283,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_2">900</field>
             <field name="premio_3">300</field>
             <field name="cuota_inscripcion">15</field>
-            <field name="estado">open</field>
+            <field name="state">open</field>
             <field name="videojuego_id" ref="game_05_fortnite"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_16_vox'), ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark')])]"/>
         </record>
@@ -296,95 +295,95 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="registration_01" model="esports.registration">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="participante_id" ref="participant_01_alpha_wolves"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-04-20</field>
             <field name="miembro_ids" eval="[(6, 0, [ref('participant_05_neon_blade'), ref('participant_06_ice_zen'), ref('participant_07_orbit'), ref('participant_08_vector')])]"/>
         </record>
         <record id="registration_02" model="esports.registration">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="participante_id" ref="participant_02_kraken_five"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-04-21</field>
             <field name="miembro_ids" eval="[(6, 0, [ref('participant_09_nova'), ref('participant_10_ghost'), ref('participant_11_sage'), ref('participant_12_strike')])]"/>
         </record>
         <record id="registration_03" model="esports.registration">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="participante_id" ref="participant_03_red_hawks"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-04-21</field>
             <field name="miembro_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen'), ref('participant_16_vox')])]"/>
         </record>
         <record id="registration_04" model="esports.registration">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="participante_id" ref="participant_04_titan_unit"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-04-22</field>
             <field name="miembro_ids" eval="[(6, 0, [ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark'), ref('participant_20_rapid_raven')])]"/>
         </record>
         <record id="registration_05" model="esports.registration">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="participante_id" ref="participant_05_neon_blade"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-05-20</field>
         </record>
         <record id="registration_06" model="esports.registration">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="participante_id" ref="participant_06_ice_zen"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-05-20</field>
         </record>
         <record id="registration_07" model="esports.registration">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="participante_id" ref="participant_09_nova"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-05-21</field>
         </record>
         <record id="registration_08" model="esports.registration">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="participante_id" ref="participant_10_ghost"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-05-21</field>
         </record>
         <record id="registration_09" model="esports.registration">
             <field name="torneo_id" ref="tournament_03_eafc_cup"/>
             <field name="participante_id" ref="participant_13_ace"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-06-20</field>
         </record>
         <record id="registration_10" model="esports.registration">
             <field name="torneo_id" ref="tournament_03_eafc_cup"/>
             <field name="participante_id" ref="participant_14_rush"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-06-20</field>
         </record>
         <record id="registration_11" model="esports.registration">
             <field name="torneo_id" ref="tournament_03_eafc_cup"/>
             <field name="participante_id" ref="participant_15_lumen"/>
-            <field name="estado">pending</field>
+            <field name="state">pending</field>
             <field name="fecha_inscripcion">2026-06-21</field>
         </record>
         <record id="registration_12" model="esports.registration">
             <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
             <field name="participante_id" ref="participant_16_vox"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-07-10</field>
         </record>
         <record id="registration_13" model="esports.registration">
             <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
             <field name="participante_id" ref="participant_17_pulse"/>
-            <field name="estado">confirmed</field>
+            <field name="state">confirmed</field>
             <field name="fecha_inscripcion">2026-07-10</field>
         </record>
         <record id="registration_14" model="esports.registration">
             <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
             <field name="participante_id" ref="participant_18_drift"/>
-            <field name="estado">pending</field>
+            <field name="state">pending</field>
             <field name="fecha_inscripcion">2026-07-11</field>
         </record>
         <record id="registration_15" model="esports.registration">
             <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
             <field name="participante_id" ref="participant_19_quark"/>
-            <field name="estado">disqualified</field>
+            <field name="state">disqualified</field>
             <field name="fecha_inscripcion">2026-07-11</field>
         </record>
 
@@ -395,7 +394,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_01" model="esports.match">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="fase">semifinal</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-05-14 18:00:00</field>
             <field name="participante_local" ref="participant_01_alpha_wolves"/>
             <field name="participante_visitante" ref="participant_02_kraken_five"/>
@@ -406,7 +405,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_02" model="esports.match">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="fase">semifinal</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-05-14 20:30:00</field>
             <field name="participante_local" ref="participant_03_red_hawks"/>
             <field name="participante_visitante" ref="participant_04_titan_unit"/>
@@ -417,7 +416,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_03" model="esports.match">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="fase">third_place</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-05-19 17:00:00</field>
             <field name="participante_local" ref="participant_02_kraken_five"/>
             <field name="participante_visitante" ref="participant_03_red_hawks"/>
@@ -428,7 +427,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_04" model="esports.match">
             <field name="torneo_id" ref="tournament_01_lol_spring"/>
             <field name="fase">final</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-05-19 20:00:00</field>
             <field name="participante_local" ref="participant_01_alpha_wolves"/>
             <field name="participante_visitante" ref="participant_04_titan_unit"/>
@@ -440,7 +439,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_05" model="esports.match">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="fase">groups</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-06-05 18:30:00</field>
             <field name="participante_local" ref="participant_05_neon_blade"/>
             <field name="participante_visitante" ref="participant_06_ice_zen"/>
@@ -451,7 +450,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_06" model="esports.match">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="fase">groups</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-06-05 20:30:00</field>
             <field name="participante_local" ref="participant_09_nova"/>
             <field name="participante_visitante" ref="participant_10_ghost"/>
@@ -462,7 +461,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_07" model="esports.match">
             <field name="torneo_id" ref="tournament_02_valorant_open"/>
             <field name="fase">final</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-06-11 19:00:00</field>
             <field name="participante_local" ref="participant_06_ice_zen"/>
             <field name="participante_visitante" ref="participant_10_ghost"/>
@@ -473,7 +472,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_08" model="esports.match">
             <field name="torneo_id" ref="tournament_03_eafc_cup"/>
             <field name="fase">groups</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-07-05 11:00:00</field>
             <field name="participante_local" ref="participant_13_ace"/>
             <field name="participante_visitante" ref="participant_14_rush"/>
@@ -484,7 +483,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_09" model="esports.match">
             <field name="torneo_id" ref="tournament_03_eafc_cup"/>
             <field name="fase">final</field>
-            <field name="estado">finished</field>
+            <field name="state">finished</field>
             <field name="fecha_hora_programada">2026-07-06 18:00:00</field>
             <field name="participante_local" ref="participant_14_rush"/>
             <field name="participante_visitante" ref="participant_15_lumen"/>
@@ -495,7 +494,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
         <record id="match_10" model="esports.match">
             <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
             <field name="fase">final</field>
-            <field name="estado">scheduled</field>
+            <field name="state">scheduled</field>
             <field name="fecha_hora_programada">2026-08-03 20:00:00</field>
             <field name="participante_local" ref="participant_16_vox"/>
             <field name="participante_visitante" ref="participant_17_pulse"/>

@@ -11,7 +11,7 @@
                 <field name="fecha_inscripcion"/>
                 <field name="torneo_id"/>
                 <field name="participante_id"/>
-                <field name="estado"/>
+                <field name="state"/>
             </list>
         </field>
     </record>
@@ -25,7 +25,7 @@
                 <field name="torneo_id"/>
                 <field name="participante_id"/>
                 <field name="fecha_inscripcion"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <templates>
                     <t t-name="card">
                         <main class="o_kanban_card_content">
@@ -60,7 +60,7 @@
                         </group>
                         <group>
                             <field name="fecha_inscripcion"/>
-                            <field name="estado"/>
+                            <field name="state"/>
                         </group>
                     </group>
                 </sheet>
@@ -68,7 +68,7 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda con filtros por estado de inscripción. -->
+    <!-- Vista de búsqueda con filtros por state de inscripción. -->
     <record id="view_esports_registration_search" model="ir.ui.view">
         <field name="name">esports.registration.search</field>
         <field name="model">esports.registration</field>
@@ -76,13 +76,13 @@
             <search string="Buscar Inscripciones">
                 <field name="torneo_id"/>
                 <field name="participante_id"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="fecha_inscripcion"/>
-                <filter string="Pendiente" name="filter_estado_pending" domain="[('estado', '=', 'pending')]"/>
-                <filter string="Confirmada" name="filter_estado_confirmed" domain="[('estado', '=', 'confirmed')]"/>
-                <filter string="Descalificada" name="filter_estado_disqualified" domain="[('estado', '=', 'disqualified')]"/>
+                <filter string="Pendiente" name="filter_state_pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Confirmada" name="filter_state_confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Descalificada" name="filter_state_disqualified" domain="[('state', '=', 'disqualified')]"/>
                 <separator/>
-                <filter string="Agrupar por estado" name="group_by_estado" context="{'group_by': 'estado'}"/>
+                <filter string="Agrupar por state" name="group_by_state" context="{'group_by': 'state'}"/>
             </search>
         </field>
     </record>
@@ -93,7 +93,7 @@
         <field name="res_model">esports.registration</field> <!--indicamos el modelo al que se aplicará la acción-->
         <field name="view_mode">kanban,list,form</field> <!--indicamos los modos de vista disponibles-->
         <field name="search_view_id" ref="view_esports_registration_search"/> <!--referenciamos la vista de búsqueda personalizada para inscripciones-->
-        <field name="context">{'search_default_group_by_estado': 1}</field>
+        <field name="context">{'search_default_group_by_state': 1}</field>
     </record>
 
     <record id="action_esports_registration_kanban_view" model="ir.actions.act_window.view">

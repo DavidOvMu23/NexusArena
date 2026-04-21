@@ -10,7 +10,7 @@ class EsportsRegistration(models.Model):
     # Campos de la inscripción de un participante a un torneo.
     fecha_inscripcion = fields.Date(string="Fecha Inscripción", default=fields.Date.context_today)
 
-    estado = fields.Selection([
+    state = fields.Selection([
         ('pending', 'Pendiente de Pago'), ('confirmed', 'Confirmada'), ('disqualified', 'Descalificada')
     ], default='pending')
 

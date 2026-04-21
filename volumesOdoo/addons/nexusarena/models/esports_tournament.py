@@ -33,14 +33,14 @@ class EsportsTournament(models.Model):
 
     cuota_inscripcion = fields.Float(string="Cuota de Inscripción")
 
-    # Estado del torneo.
-    estado = fields.Selection([
+    # state del torneo.
+    state = fields.Selection([
         ('draft', 'Borrador'),
         ('open', 'Inscripciones Abiertas'),
         ('ongoing', 'En Curso'),
         ('done', 'Finalizado'),
         ('cancel', 'Cancelado')
-    ], string="Estado", default='draft')
+    ], string="state", default='draft')
 
     # Relaciones
     videojuego_id = fields.Many2one('esports.game', string="Videojuego", required=True)

@@ -17,13 +17,13 @@ class EsportsMatch(models.Model):
 
 	fecha_hora_programada = fields.Datetime(string='Fecha y hora programada')
 
-	# Estado de la partida.
-	estado = fields.Selection([
+	# state de la partida.
+	state = fields.Selection([
 		('scheduled', 'Programada'),
 		('playing', 'En juego'),
 		('finished', 'Finalizada'),
 		('walkover', 'Walkover'),
-	], string='Estado', default='scheduled')
+	], string='state', default='scheduled')
 
 	resultado = fields.Integer(string='Resultado')
 	puntuacion_local = fields.Integer(string='Puntuación local')

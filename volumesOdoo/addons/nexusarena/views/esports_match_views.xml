@@ -13,7 +13,7 @@
                 <field name="fecha_hora_programada"/>
                 <field name="participante_local"/>
                 <field name="participante_visitante"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="puntuacion_local"/>
                 <field name="puntuacion_visitante"/>
             </list>
@@ -31,7 +31,7 @@
                         <group>
                             <field name="torneo_id"/>
                             <field name="fase"/>
-                            <field name="estado"/>
+                            <field name="state"/>
                             <field name="fecha_hora_programada"/>
                         </group>
                         <group>
@@ -47,7 +47,7 @@
         </field>
     </record>
 
-    <!-- Vista de búsqueda con filtros por estado de la partida. -->
+    <!-- Vista de búsqueda con filtros por state de la partida. -->
     <record id="view_esports_match_search" model="ir.ui.view">
         <field name="name">esports.match.search</field>
         <field name="model">esports.match</field>
@@ -56,12 +56,12 @@
                 <field name="torneo_id"/>
                 <field name="participante_local"/>
                 <field name="participante_visitante"/>
-                <field name="estado"/>
+                <field name="state"/>
                 <field name="fase"/>
-                <filter string="Programada" name="filter_estado_scheduled" domain="[('estado', '=', 'scheduled')]"/>
-                <filter string="En Juego" name="filter_estado_playing" domain="[('estado', '=', 'playing')]"/>
-                <filter string="Finalizada" name="filter_estado_finished" domain="[('estado', '=', 'finished')]"/>
-                <filter string="Walkover" name="filter_estado_walkover" domain="[('estado', '=', 'walkover')]"/>
+                <filter string="Programada" name="filter_state_scheduled" domain="[('state', '=', 'scheduled')]"/>
+                <filter string="En Juego" name="filter_state_playing" domain="[('state', '=', 'playing')]"/>
+                <filter string="Finalizada" name="filter_state_finished" domain="[('state', '=', 'finished')]"/>
+                <filter string="Walkover" name="filter_state_walkover" domain="[('state', '=', 'walkover')]"/>
             </search>
         </field>
     </record>
