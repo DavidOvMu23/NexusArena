@@ -2,6 +2,7 @@ from odoo import models, fields
 
 
 class ResPartner(models.Model):
+    _inherit = 'res.partner'
     #Usamos el modelo contactos de Odoo y a partir de ahí añadimos el resto de campos
     #que nos interesen, en nuestro caso, los relacionados con los participantes
 
