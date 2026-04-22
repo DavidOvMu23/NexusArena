@@ -32,9 +32,20 @@ class EsportsRegistration(models.Model):
     #almacenar el resultado en la base de datos y no tener que recalcularlo cada vez que se accede a él.
     dias_desde_inscripcion = fields.Integer(string='Días desde inscripción', compute='_compute_dias_desde_inscripcion', store=True)
 
-    _sql_constraints = [
-        ('unique_registration', 'unique(torneo_id, participante_id)', 'El participante ya está inscrito en este torneo.')
-    ]
+    # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
+    # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
+
+    #aqui lo que hacemos es sobreescribir el método create para añadir una validación que impida que un mismo participante 
+    #se inscriba varias veces en el mismo torneo.
+    @api.model_create_single
+    def create(self, vals):
+        torneo_id = vals.get('torneo_id')
+        participante_id = vals.get('participante_id')
+        if torneo_id and participante_id:
+            exists = self.search([('torneo_id', '=', torneo_id), ('participante_id', '=', participante_id)], limit=1)
+            if exists:
+                raise UserError('El participante ya está inscrito en este torneo.')
+        return super(EsportsRegistration, self).create(vals)
 
 
     # Calculamos los días transcurridos desde la fecha de inscripción hasta hoy para mostrar esta 

@@ -23,7 +23,7 @@ class ResPartner(models.Model):
 
     experiencia = fields.Selection([
         ('amateur', 'Amateur'), ('pro', 'Profesional'), ('semi', 'Semiprofesional')
-    ], string="Nivel de Experiencia", required=True)
+    ], string="Nivel de Experiencia")
 
     # Relaciones
     juego_principal_id = fields.Many2one('esports.game', string='Juego principal')
