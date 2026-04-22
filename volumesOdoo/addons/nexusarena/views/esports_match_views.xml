@@ -26,6 +26,13 @@
         <field name="model">esports.match</field>
         <field name="arch" type="xml">
             <form string="Partida">
+
+
+
+                <!-- Botones de acción en el encabezado -->
+                <header>
+                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -40,6 +47,11 @@
                             <field name="puntuacion_local"/>
                             <field name="puntuacion_visitante"/>
                             <field name="resultado"/>
+
+
+
+                            <!-- Campos calculados -->
+                            <field name="ganador_id" readonly="1"/>
                         </group>
                     </group>
                 </sheet>

@@ -22,6 +22,13 @@
         <field name="model">esports.standing</field>
         <field name="arch" type="xml">
             <form string="Clasificación">
+
+
+
+            <!-- Botones de acción en el encabezado -->
+                <header>
+                    <button name="action_generate_prize_invoice" type="object" string="Generar factura de premio" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -32,6 +39,17 @@
                             <field name="posicion_final"/>
                             <field name="factura_id"/>
                         </group>
+                    </group>
+
+
+
+                    <!-- Campos calculados -->
+                    <group>
+                        <field name="partidas_jugadas" readonly="1"/>
+                        <field name="partidas_ganadas" readonly="1"/>
+                        <field name="partidas_perdidas" readonly="1"/>
+                        <field name="puntos_acumulados" readonly="1"/>
+                        <field name="premio_obtenido" readonly="1"/>
                     </group>
                 </sheet>
             </form>

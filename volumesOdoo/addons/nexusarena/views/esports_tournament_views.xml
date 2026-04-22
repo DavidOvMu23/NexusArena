@@ -63,6 +63,15 @@
         <field name="model">esports.tournament</field>
         <field name="arch" type="xml">
             <form string="Torneo">
+
+
+                <!-- Botones de acción en el encabezado -->
+                <header>
+                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight"/>
+                    <button name="action_start_tournament" type="object" string="Iniciar torneo"/>
+                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo"/>
+                    <button name="action_notify_participants" type="object" string="Notificar participantes"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -84,6 +93,14 @@
                         <field name="premio_1"/>
                         <field name="premio_2"/>
                         <field name="premio_3"/>
+                    </group>
+
+
+                    <!-- Campos calculados -->
+                    <group>
+                        <field name="inscripciones_count" readonly="1"/>
+                        <field name="numero_participantes" readonly="1"/>
+                        <field name="ingresos_totales" readonly="1"/>
                     </group>
                 </sheet>
             </form>

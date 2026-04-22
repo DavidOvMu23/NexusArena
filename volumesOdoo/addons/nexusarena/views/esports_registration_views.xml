@@ -52,6 +52,13 @@
         <field name="model">esports.registration</field>
         <field name="arch" type="xml">
             <form string="Inscripción">
+
+            
+
+                <!-- Botones de acción en el encabezado -->
+                <header>
+                    <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -61,6 +68,11 @@
                         <group>
                             <field name="fecha_inscripcion"/>
                             <field name="state"/>
+
+
+
+                            <!-- Campos calculados -->
+                            <field name="dias_desde_inscripcion" readonly="1"/>
                         </group>
                     </group>
                 </sheet>

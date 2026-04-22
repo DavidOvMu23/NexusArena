@@ -1,7 +1,7 @@
 {
     'name': 'Nexus Arena',
     'summary': 'Base del módulo de gestión de torneos de eSports',
-    'depends': ['base', 'account', 'contacts'],
+    'depends': ['base', 'account', 'contacts', 'mail'],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',

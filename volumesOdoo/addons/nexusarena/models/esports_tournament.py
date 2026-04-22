@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 
 class EsportsTournament(models.Model):
@@ -56,8 +57,73 @@ class EsportsTournament(models.Model):
         string='Participantes',
     )
 
-    # Campos calculados reservados para fases posteriores.
-    # lineas_inscripcion
-    # partidas_torneo
-    # numero_participantes
-    # ingresos_totales
+    # Campos calculados
+    # compute es para indicar que el valor de este campo se calcula a partir de otros campos, y store=True es para
+    # almacenar el resultado en la base de datos y no tener que recalcularlo cada vez que se accede a él.
+    inscripciones_count = fields.Integer(string='Líneas de inscripción', compute='_compute_statistics', store=True)
+    partidas_count = fields.Integer(string='Partidas del torneo', compute='_compute_statistics', store=True)
+    numero_participantes = fields.Integer(string='Número de participantes', compute='_compute_statistics', store=True)
+    ingresos_totales = fields.Float(string='Ingresos totales', compute='_compute_statistics', store=True)
+
+
+    # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
+    @api.depends('inscripcion_ids', 'partida_ids', 'cuota_inscripcion')
+
+    # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
+    def _compute_statistics(self):
+        for rec in self:
+
+            # rec es para referirnos a cada registro individual dentro del modelo.
+            rec.inscripciones_count = len(rec.inscripcion_ids)
+            rec.partidas_count = len(rec.partida_ids)
+            rec.numero_participantes = rec.inscripciones_count
+            rec.ingresos_totales = rec.numero_participantes * (rec.cuota_inscripcion or 0.0)
+
+    # Acciones para cambiar el estado del torneo y notificar a los participantes.
+    def action_open_inscriptions(self):
+        for rec in self:
+            if rec.state != 'draft':
+                raise UserError('Solo se puede abrir inscripciones desde el estado Borrador.')
+            rec.state = 'open'
+
+    def action_start_tournament(self):
+        for rec in self:
+            if rec.state != 'open':
+                raise UserError('El torneo debe tener las inscripciones abiertas para iniciarse.')
+            if rec.numero_participantes < 2:
+                raise UserError('Se necesitan al menos 2 participantes inscritos para iniciar el torneo.')
+            rec.state = 'ongoing'
+
+    def action_finalize_tournament(self):
+        for rec in self:
+            if rec.state not in ('ongoing', 'open'):
+                raise UserError('Solo se puede finalizar un torneo que esté en curso o con inscripciones abiertas.')
+            rec.state = 'done'
+
+    def action_notify_participants(self, subject=None, body=None):
+        subject = subject or 'Notificación del torneo'
+        for rec in self:
+            if not rec.participante_ids:
+                continue
+            msg = body or ('Notificación del torneo %s (estado: %s)' % (rec.nombre or '', rec.state or ''))
+            
+            # Enviamos un mensaje a cada participante (esto crea mail.message y notifica al partner)
+            for partner in rec.participante_ids:
+                try:
+                    partner.message_post(body=msg, subject=subject)
+                except Exception:
+                    continue
+
+    def write(self, vals):
+        # Bloquear edición de torneos finalizados para usuarios no administradores
+        for rec in self:
+            if rec.state == 'done' and not self.env.user.has_group('nexusarena.group_tourney_admin'):
+                raise UserError('El torneo está finalizado y no puede ser editado.')
+        return super(EsportsTournament, self).write(vals)
+
+    def unlink(self):
+        # Bloquear eliminación de torneos finalizados para usuarios no administradores
+        for rec in self:
+            if rec.state == 'done' and not self.env.user.has_group('nexusarena.group_tourney_admin'):
+                raise UserError('El torneo está finalizado y no puede ser eliminado.')
+        return super(EsportsTournament, self).unlink()

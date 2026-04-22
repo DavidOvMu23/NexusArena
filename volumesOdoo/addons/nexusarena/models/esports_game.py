@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class EsportsGame(models.Model):
@@ -36,5 +36,11 @@ class EsportsGame(models.Model):
         string='Participantes frecuentes',
     )
 
-    # Campo calculado reservado para fases posteriores.
-    # torneos_actives
+    torneos_activos_count = fields.Integer(string='Número de torneos activos', compute='_compute_actives', store=True)
+
+    # El método _compute_actives calcula el número de torneos activos asociados a este videojuego, 
+    #contando aquellos torneos cuyo estado es 'open' o 'ongoing'.
+    @api.depends('torneo_ids.state')
+    def _compute_actives(self):
+        for rec in self:
+            rec.torneos_activos_count = len([t for t in rec.torneo_ids if t.state in ('open', 'ongoing')])
