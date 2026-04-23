@@ -1,7 +1,7 @@
 {
     'name': 'Nexus Arena',
     'summary': 'Base del módulo de gestión de torneos de eSports',
-    'depends': ['base', 'account', 'contacts'],
+    'depends': ['base', 'account', 'contacts', 'mail'],
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
@@ -13,6 +13,9 @@
         'views/esports_standing_views.xml',
         'views/res_partner_views.xml',
         'views/nexusarena_menus.xml',
+    ],
+    'demo': [
+        'demo/nexusarena_demo.xml',
     ],
     'installable': True,
     'application': True,

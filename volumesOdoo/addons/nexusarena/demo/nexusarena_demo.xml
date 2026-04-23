@@ -1,0 +1,568 @@
+<!-- Archivo de datos demo para NexusArena-->
+<!-- Para cargarlos la forma mas facil es que a la hora de crear
+la base de datos le des al checkbox de "Cargar datos demo" -->
+
+<odoo>
+    <data noupdate="1">
+
+
+
+
+        <!-- 20 participantes -->
+        <record id="participant_01_alpha_wolves" model="res.partner">
+            <field name="name">Lobos de Madrid</field>
+            <field name="is_company">True</field>
+            <field name="tipo_jugador">equipo</field>
+            <field name="nick">LOBOS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_02_kraken_five" model="res.partner">
+            <field name="name">Tormenta Sevilla</field>
+            <field name="is_company">True</field>
+            <field name="tipo_jugador">equipo</field>
+            <field name="nick">SEVILLA</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_03_red_hawks" model="res.partner">
+            <field name="name">Halcones Bilbao</field>
+            <field name="is_company">True</field>
+            <field name="tipo_jugador">equipo</field>
+            <field name="nick">HALCONES</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_04_titan_unit" model="res.partner">
+            <field name="name">Titanes Valencia</field>
+            <field name="is_company">True</field>
+            <field name="tipo_jugador">equipo</field>
+            <field name="nick">TITANES</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_05_neon_blade" model="res.partner">
+            <field name="name">Diego Morales</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">DiegoM</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_06_ice_zen" model="res.partner">
+            <field name="name">Laura Cordero</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">LauriC</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_07_orbit" model="res.partner">
+            <field name="name">Marina Rojas</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">MarinaR</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_08_vector" model="res.partner">
+            <field name="name">Sergio Vidal</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">SergioV</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">amateur</field>
+        </record>
+        <record id="participant_09_nova" model="res.partner">
+            <field name="name">Alicia Pardo</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">AliciaP</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_10_ghost" model="res.partner">
+            <field name="name">Bruno Gil</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">BrunoG</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_11_sage" model="res.partner">
+            <field name="name">Natalia Soler</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">NatiS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">amateur</field>
+        </record>
+        <record id="participant_12_strike" model="res.partner">
+            <field name="name">Pablo Mena</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">PabloM</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">pc</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_13_ace" model="res.partner">
+            <field name="name">Irene Santos</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">IreneS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">console</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_14_rush" model="res.partner">
+            <field name="name">Hector Diaz</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">HectorD</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">console</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_15_lumen" model="res.partner">
+            <field name="name">Julia Serra</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">JuliaS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">console</field>
+            <field name="experiencia">amateur</field>
+        </record>
+        <record id="participant_16_vox" model="res.partner">
+            <field name="name">Ruben Salas</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">RubenS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">mobile</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_17_pulse" model="res.partner">
+            <field name="name">Carla Nunez</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">CarlaN</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">mobile</field>
+            <field name="experiencia">pro</field>
+        </record>
+        <record id="participant_18_drift" model="res.partner">
+            <field name="name">Javier Soto</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">JaviS</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">mobile</field>
+            <field name="experiencia">semi</field>
+        </record>
+        <record id="participant_19_quark" model="res.partner">
+            <field name="name">Marta Riu</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">MartaR</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">mobile</field>
+            <field name="experiencia">amateur</field>
+        </record>
+        <record id="participant_20_rapid_raven" model="res.partner">
+            <field name="name">Ivan Ochoa</field>
+            <field name="tipo_jugador">jugador</field>
+            <field name="nick">IvanO</field>
+            <field name="pais_origen">Espana</field>
+            <field name="plataforma">mobile</field>
+            <field name="experiencia">semi</field>
+        </record>
+
+
+
+
+        <!-- 5 juegos -->
+        <record id="game_01_lol" model="esports.game">
+            <field name="nombre">League of Legends</field>
+            <field name="genero">moba</field>
+            <field name="desarrollador">Riot Games</field>
+            <field name="modalidad">teams</field>
+            <field name="max_jugadores_equipo">5</field>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_01_alpha_wolves'), ref('participant_02_kraken_five'), ref('participant_03_red_hawks'), ref('participant_04_titan_unit')])]"/>
+        </record>
+        <record id="game_02_valorant" model="esports.game">
+            <field name="nombre">Valorant</field>
+            <field name="genero">fps</field>
+            <field name="desarrollador">Riot Games</field>
+            <field name="modalidad">both</field>
+            <field name="max_jugadores_equipo">5</field>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_05_neon_blade'), ref('participant_06_ice_zen'), ref('participant_09_nova'), ref('participant_10_ghost')])]"/>
+        </record>
+        <record id="game_03_eafc25" model="esports.game">
+            <field name="nombre">EA Sports FC 25</field>
+            <field name="genero">deportes</field>
+            <field name="desarrollador">EA Sports</field>
+            <field name="modalidad">individual</field>
+            <field name="max_jugadores_equipo">1</field>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen')])]"/>
+        </record>
+        <record id="game_04_street_fighter6" model="esports.game">
+            <field name="nombre">Street Fighter 6</field>
+            <field name="genero">lucha</field>
+            <field name="desarrollador">Capcom</field>
+            <field name="modalidad">individual</field>
+            <field name="max_jugadores_equipo">1</field>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_11_sage'), ref('participant_12_strike')])]"/>
+        </record>
+        <record id="game_05_fortnite" model="esports.game">
+            <field name="nombre">Fortnite</field>
+            <field name="genero">br</field>
+            <field name="desarrollador">Epic Games</field>
+            <field name="modalidad">both</field>
+            <field name="max_jugadores_equipo">4</field>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_16_vox'), ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark'), ref('participant_20_rapid_raven')])]"/>
+        </record>
+
+
+
+
+        <!-- 4 torneos -->
+        <record id="tournament_01_lol_spring" model="esports.tournament">
+            <field name="nombre">Torneo Primavera Madrid</field>
+            <field name="edicion">2026</field>
+            <field name="formato">double</field>
+            <field name="modalidad">online</field>
+            <field name="fecha_inicio">2026-05-01</field>
+            <field name="fecha_fin">2026-05-20</field>
+            <field name="premio_total">8000</field>
+            <field name="premio_1">4500</field>
+            <field name="premio_2">2500</field>
+            <field name="premio_3">1000</field>
+            <field name="cuota_inscripcion">35</field>
+            <field name="state">done</field>
+            <field name="videojuego_id" ref="game_01_lol"/>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_01_alpha_wolves'), ref('participant_02_kraken_five'), ref('participant_03_red_hawks'), ref('participant_04_titan_unit')])]"/>
+        </record>
+        <record id="tournament_02_valorant_open" model="esports.tournament">
+            <field name="nombre">Liga Valorant Barcelona</field>
+            <field name="edicion">2026</field>
+            <field name="formato">league</field>
+            <field name="modalidad">hibrido</field>
+            <field name="fecha_inicio">2026-06-01</field>
+            <field name="fecha_fin">2026-06-12</field>
+            <field name="premio_total">5000</field>
+            <field name="premio_1">3000</field>
+            <field name="premio_2">1500</field>
+            <field name="premio_3">500</field>
+            <field name="cuota_inscripcion">20</field>
+            <field name="state">done</field>
+            <field name="videojuego_id" ref="game_02_valorant"/>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_05_neon_blade'), ref('participant_06_ice_zen'), ref('participant_09_nova'), ref('participant_10_ghost')])]"/>
+        </record>
+        <record id="tournament_03_eafc_cup" model="esports.tournament">
+            <field name="nombre">Copa EA FC Sevilla</field>
+            <field name="edicion">2026</field>
+            <field name="formato">direct</field>
+            <field name="modalidad">presencial</field>
+            <field name="fecha_inicio">2026-07-05</field>
+            <field name="fecha_fin">2026-07-06</field>
+            <field name="premio_total">2000</field>
+            <field name="premio_1">1200</field>
+            <field name="premio_2">600</field>
+            <field name="premio_3">200</field>
+            <field name="cuota_inscripcion">10</field>
+            <field name="state">ongoing</field>
+            <field name="videojuego_id" ref="game_03_eafc25"/>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen')])]"/>
+        </record>
+        <record id="tournament_04_fortnite_showdown" model="esports.tournament">
+            <field name="nombre">Torneo Fortnite Valencia</field>
+            <field name="edicion">2026</field>
+            <field name="formato">direct</field>
+            <field name="modalidad">online</field>
+            <field name="fecha_inicio">2026-08-01</field>
+            <field name="fecha_fin">2026-08-03</field>
+            <field name="premio_total">3000</field>
+            <field name="premio_1">1800</field>
+            <field name="premio_2">900</field>
+            <field name="premio_3">300</field>
+            <field name="cuota_inscripcion">15</field>
+            <field name="state">open</field>
+            <field name="videojuego_id" ref="game_05_fortnite"/>
+            <field name="participante_ids" eval="[(6, 0, [ref('participant_16_vox'), ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark')])]"/>
+        </record>
+
+
+
+
+        <!-- 15 inscripciones -->
+        <record id="registration_01" model="esports.registration">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_01_alpha_wolves"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-04-20</field>
+            <field name="miembro_ids" eval="[(6, 0, [ref('participant_05_neon_blade'), ref('participant_06_ice_zen'), ref('participant_07_orbit'), ref('participant_08_vector')])]"/>
+        </record>
+        <record id="registration_02" model="esports.registration">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_02_kraken_five"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-04-21</field>
+            <field name="miembro_ids" eval="[(6, 0, [ref('participant_09_nova'), ref('participant_10_ghost'), ref('participant_11_sage'), ref('participant_12_strike')])]"/>
+        </record>
+        <record id="registration_03" model="esports.registration">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_03_red_hawks"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-04-21</field>
+            <field name="miembro_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen'), ref('participant_16_vox')])]"/>
+        </record>
+        <record id="registration_04" model="esports.registration">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_04_titan_unit"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-04-22</field>
+            <field name="miembro_ids" eval="[(6, 0, [ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark'), ref('participant_20_rapid_raven')])]"/>
+        </record>
+        <record id="registration_05" model="esports.registration">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_05_neon_blade"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-05-20</field>
+        </record>
+        <record id="registration_06" model="esports.registration">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_06_ice_zen"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-05-20</field>
+        </record>
+        <record id="registration_07" model="esports.registration">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_09_nova"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-05-21</field>
+        </record>
+        <record id="registration_08" model="esports.registration">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_10_ghost"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-05-21</field>
+        </record>
+        <record id="registration_09" model="esports.registration">
+            <field name="torneo_id" ref="tournament_03_eafc_cup"/>
+            <field name="participante_id" ref="participant_13_ace"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-06-20</field>
+        </record>
+        <record id="registration_10" model="esports.registration">
+            <field name="torneo_id" ref="tournament_03_eafc_cup"/>
+            <field name="participante_id" ref="participant_14_rush"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-06-20</field>
+        </record>
+        <record id="registration_11" model="esports.registration">
+            <field name="torneo_id" ref="tournament_03_eafc_cup"/>
+            <field name="participante_id" ref="participant_15_lumen"/>
+            <field name="state">pending</field>
+            <field name="fecha_inscripcion">2026-06-21</field>
+        </record>
+        <record id="registration_12" model="esports.registration">
+            <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
+            <field name="participante_id" ref="participant_16_vox"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-07-10</field>
+        </record>
+        <record id="registration_13" model="esports.registration">
+            <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
+            <field name="participante_id" ref="participant_17_pulse"/>
+            <field name="state">confirmed</field>
+            <field name="fecha_inscripcion">2026-07-10</field>
+        </record>
+        <record id="registration_14" model="esports.registration">
+            <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
+            <field name="participante_id" ref="participant_18_drift"/>
+            <field name="state">pending</field>
+            <field name="fecha_inscripcion">2026-07-11</field>
+        </record>
+        <record id="registration_15" model="esports.registration">
+            <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
+            <field name="participante_id" ref="participant_19_quark"/>
+            <field name="state">disqualified</field>
+            <field name="fecha_inscripcion">2026-07-11</field>
+        </record>
+
+
+
+
+        <!-- 10 partidas -->
+        <record id="match_01" model="esports.match">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="fase">semifinal</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-05-14 18:00:00</field>
+            <field name="participante_local" ref="participant_01_alpha_wolves"/>
+            <field name="participante_visitante" ref="participant_02_kraken_five"/>
+            <field name="resultado">1</field>
+            <field name="puntuacion_local">2</field>
+            <field name="puntuacion_visitante">1</field>
+        </record>
+        <record id="match_02" model="esports.match">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="fase">semifinal</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-05-14 20:30:00</field>
+            <field name="participante_local" ref="participant_03_red_hawks"/>
+            <field name="participante_visitante" ref="participant_04_titan_unit"/>
+            <field name="resultado">2</field>
+            <field name="puntuacion_local">0</field>
+            <field name="puntuacion_visitante">2</field>
+        </record>
+        <record id="match_03" model="esports.match">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="fase">third_place</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-05-19 17:00:00</field>
+            <field name="participante_local" ref="participant_02_kraken_five"/>
+            <field name="participante_visitante" ref="participant_03_red_hawks"/>
+            <field name="resultado">1</field>
+            <field name="puntuacion_local">2</field>
+            <field name="puntuacion_visitante">0</field>
+        </record>
+        <record id="match_04" model="esports.match">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="fase">final</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-05-19 20:00:00</field>
+            <field name="participante_local" ref="participant_01_alpha_wolves"/>
+            <field name="participante_visitante" ref="participant_04_titan_unit"/>
+            <field name="resultado">2</field>
+            <field name="puntuacion_local">1</field>
+            <field name="puntuacion_visitante">3</field>
+            <field name="arbitro_ids" eval="[(6, 0, [ref('participant_11_sage'), ref('participant_12_strike')])]"/>
+        </record>
+        <record id="match_05" model="esports.match">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="fase">groups</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-06-05 18:30:00</field>
+            <field name="participante_local" ref="participant_05_neon_blade"/>
+            <field name="participante_visitante" ref="participant_06_ice_zen"/>
+            <field name="resultado">1</field>
+            <field name="puntuacion_local">13</field>
+            <field name="puntuacion_visitante">11</field>
+        </record>
+        <record id="match_06" model="esports.match">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="fase">groups</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-06-05 20:30:00</field>
+            <field name="participante_local" ref="participant_09_nova"/>
+            <field name="participante_visitante" ref="participant_10_ghost"/>
+            <field name="resultado">2</field>
+            <field name="puntuacion_local">7</field>
+            <field name="puntuacion_visitante">13</field>
+        </record>
+        <record id="match_07" model="esports.match">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="fase">final</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-06-11 19:00:00</field>
+            <field name="participante_local" ref="participant_06_ice_zen"/>
+            <field name="participante_visitante" ref="participant_10_ghost"/>
+            <field name="resultado">2</field>
+            <field name="puntuacion_local">10</field>
+            <field name="puntuacion_visitante">13</field>
+        </record>
+        <record id="match_08" model="esports.match">
+            <field name="torneo_id" ref="tournament_03_eafc_cup"/>
+            <field name="fase">groups</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-07-05 11:00:00</field>
+            <field name="participante_local" ref="participant_13_ace"/>
+            <field name="participante_visitante" ref="participant_14_rush"/>
+            <field name="resultado">1</field>
+            <field name="puntuacion_local">3</field>
+            <field name="puntuacion_visitante">2</field>
+        </record>
+        <record id="match_09" model="esports.match">
+            <field name="torneo_id" ref="tournament_03_eafc_cup"/>
+            <field name="fase">final</field>
+            <field name="state">finished</field>
+            <field name="fecha_hora_programada">2026-07-06 18:00:00</field>
+            <field name="participante_local" ref="participant_14_rush"/>
+            <field name="participante_visitante" ref="participant_15_lumen"/>
+            <field name="resultado">2</field>
+            <field name="puntuacion_local">1</field>
+            <field name="puntuacion_visitante">4</field>
+        </record>
+        <record id="match_10" model="esports.match">
+            <field name="torneo_id" ref="tournament_04_fortnite_showdown"/>
+            <field name="fase">final</field>
+            <field name="state">scheduled</field>
+            <field name="fecha_hora_programada">2026-08-03 20:00:00</field>
+            <field name="participante_local" ref="participant_16_vox"/>
+            <field name="participante_visitante" ref="participant_17_pulse"/>
+            <field name="resultado">0</field>
+            <field name="puntuacion_local">0</field>
+            <field name="puntuacion_visitante">0</field>
+        </record>
+
+
+
+
+        <!-- 8 clasificaciones -->
+        <record id="standing_01" model="esports.standing">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_04_titan_unit"/>
+            <field name="inscripcion_id" ref="registration_04"/>
+            <field name="partida_final_id" ref="match_04"/>
+            <field name="posicion_final">1</field>
+        </record>
+        <record id="standing_02" model="esports.standing">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_01_alpha_wolves"/>
+            <field name="inscripcion_id" ref="registration_01"/>
+            <field name="partida_final_id" ref="match_04"/>
+            <field name="posicion_final">2</field>
+        </record>
+        <record id="standing_03" model="esports.standing">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_02_kraken_five"/>
+            <field name="inscripcion_id" ref="registration_02"/>
+            <field name="partida_final_id" ref="match_03"/>
+            <field name="posicion_final">3</field>
+        </record>
+        <record id="standing_04" model="esports.standing">
+            <field name="torneo_id" ref="tournament_01_lol_spring"/>
+            <field name="participante_id" ref="participant_03_red_hawks"/>
+            <field name="inscripcion_id" ref="registration_03"/>
+            <field name="partida_final_id" ref="match_03"/>
+            <field name="posicion_final">4</field>
+        </record>
+        <record id="standing_05" model="esports.standing">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_10_ghost"/>
+            <field name="inscripcion_id" ref="registration_08"/>
+            <field name="partida_final_id" ref="match_07"/>
+            <field name="posicion_final">1</field>
+        </record>
+        <record id="standing_06" model="esports.standing">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_06_ice_zen"/>
+            <field name="inscripcion_id" ref="registration_06"/>
+            <field name="partida_final_id" ref="match_07"/>
+            <field name="posicion_final">2</field>
+        </record>
+        <record id="standing_07" model="esports.standing">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_05_neon_blade"/>
+            <field name="inscripcion_id" ref="registration_05"/>
+            <field name="partida_final_id" ref="match_05"/>
+            <field name="posicion_final">3</field>
+        </record>
+        <record id="standing_08" model="esports.standing">
+            <field name="torneo_id" ref="tournament_02_valorant_open"/>
+            <field name="participante_id" ref="participant_09_nova"/>
+            <field name="inscripcion_id" ref="registration_07"/>
+            <field name="partida_final_id" ref="match_06"/>
+            <field name="posicion_final">4</field>
+        </record>
+
+    </data>
+</odoo>
