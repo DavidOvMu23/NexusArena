@@ -1,0 +1,6 @@
+usuarios:
+-admin
+-participante
+-organizador
+
+contraseña para todos los usuarios: 123
