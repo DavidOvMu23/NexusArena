@@ -32,6 +32,7 @@
                             <field name="name"/>
                             <field name="nick"/>
                             <field name="tipo_jugador"/>
+                            <field name="equipo_id" attrs="{'invisible': [('tipo_jugador', '!=', 'jugador')]}"/>
                             <field name="experiencia"/>
                         </group>
                         <group>
@@ -39,6 +40,7 @@
                             <field name="plataforma"/>
                             <field name="email"/>
                             <field name="phone"/>
+                            <field name="jugador_ids" attrs="{'invisible': [('tipo_jugador', '!=', 'equipo')]}"/>
                         </group>
                     </group>
                 </sheet>

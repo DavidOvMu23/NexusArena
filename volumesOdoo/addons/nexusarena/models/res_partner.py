@@ -25,6 +25,18 @@ class ResPartner(models.Model):
         ('amateur', 'Amateur'), ('pro', 'Profesional'), ('semi', 'Semiprofesional')
     ], string="Nivel de Experiencia")
 
+    equipo_id = fields.Many2one(
+        'res.partner',
+        string='Equipo',
+        domain=[('tipo_jugador', '=', 'equipo')],
+    )
+
+    jugador_ids = fields.One2many(
+        'res.partner',
+        'equipo_id',
+        string='Jugadores integrantes',
+    )
+
     # Relaciones
     juego_principal_id = fields.Many2one('esports.game', string='Juego principal')
     inscripcion_ids = fields.One2many('esports.registration', 'participante_id', string='Inscripciones')
