@@ -78,6 +78,7 @@
                             <field name="nombre"/>
                             <field name="edicion"/>
                             <field name="videojuego_id"/>
+                            <field name="es_publico"/>
                             <field name="state"/>
                         </group>
                         <group>

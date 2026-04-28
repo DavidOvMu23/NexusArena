@@ -27,6 +27,7 @@ class EsportsTournament(models.Model):
 
     fecha_inicio = fields.Date(string="Fecha de Inicio")
     fecha_fin = fields.Date(string="Fecha de Fin")
+    es_publico = fields.Boolean(string='Torneo público', default=False)
 
     premio_total = fields.Float(string="Premio Total (€)")
     premio_1 = fields.Float(string="1er Puesto (€)")

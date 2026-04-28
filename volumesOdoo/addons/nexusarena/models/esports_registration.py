@@ -47,7 +47,6 @@ class EsportsRegistration(models.Model):
                 raise UserError('El participante ya está inscrito en este torneo.')
         return super(EsportsRegistration, self).create(vals)
 
-
     # Calculamos los días transcurridos desde la fecha de inscripción hasta hoy para mostrar esta 
     # información en la vista del formulario de inscripción.
     @api.depends('fecha_inscripcion')
@@ -128,3 +127,17 @@ class EsportsRegistration(models.Model):
             pass
 
         return invoice
+
+    #aqui añadimos una restricción a nivel de modelo para evitar que se creen registros de inscripción duplicados para el mismo torneo y participante,
+    @api.constrains('torneo_id', 'participante_id')
+    def _check_unique_registration(self):
+        for rec in self:
+            if not rec.torneo_id or not rec.participante_id:
+                continue
+            duplicate = self.search([
+                ('id', '!=', rec.id),
+                ('torneo_id', '=', rec.torneo_id.id),
+                ('participante_id', '=', rec.participante_id.id),
+            ], limit=1)
+            if duplicate:
+                raise UserError('El participante ya está inscrito en este torneo.')
