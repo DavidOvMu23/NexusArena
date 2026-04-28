@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class EsportsStanding(models.Model):
     # Tabla de clasificación final de participantes por torneo.
     _name = 'esports.standing'
+    _inherit = ['mail.thread']
     _description = 'Clasificación del Torneo'
     
     # Campos

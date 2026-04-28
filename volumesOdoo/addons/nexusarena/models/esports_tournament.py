@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class EsportsTournament(models.Model):
     # Modelo torneos.
     _name = 'esports.tournament'
+    _inherit = ['mail.thread']
     _description = 'Torneo de eSports'
     _rec_name = 'nombre'
 
