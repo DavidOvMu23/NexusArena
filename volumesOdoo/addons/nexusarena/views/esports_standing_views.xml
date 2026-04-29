@@ -27,7 +27,7 @@
 
             <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_generate_prize_invoice" type="object" string="Generar factura de premio" class="oe_highlight"/>
+                    <button name="action_generate_prize_invoice" type="object" string="Generar factura de premio" class="oe_highlight" invisible="factura_id != False"/>
                 </header>
                 <sheet>
                     <group>

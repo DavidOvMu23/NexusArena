@@ -7,6 +7,7 @@ class EsportsTournament(models.Model):
     _name = 'esports.tournament'
     _description = 'Torneo de eSports'
     _rec_name = 'nombre'
+    _inherit = ['mail.thread']
 
     # Datos de el torneo
     nombre = fields.Char(string="Nombre del Torneo")
@@ -82,29 +83,62 @@ class EsportsTournament(models.Model):
     # Acciones para cambiar el estado del torneo y notificar a los participantes.
     def action_open_inscriptions(self):
         for rec in self:
+            if rec.state == 'done':
+                raise UserError('El torneo está finalizado y no permite más acciones.')
+            if rec.state == 'cancel':
+                raise UserError('El torneo está cancelado y no permite abrir inscripciones.')
             if rec.state != 'draft':
                 raise UserError('Solo se puede abrir inscripciones desde el estado Borrador.')
+            if not rec.videojuego_id:
+                raise UserError('Debe seleccionar un videojuego antes de abrir inscripciones.')
             rec.state = 'open'
 
     def action_start_tournament(self):
         for rec in self:
+            if rec.state == 'done':
+                raise UserError('El torneo está finalizado y no permite más acciones.')
+            if rec.state == 'cancel':
+                raise UserError('El torneo está cancelado y no se puede iniciar.')
             if rec.state != 'open':
                 raise UserError('El torneo debe tener las inscripciones abiertas para iniciarse.')
-            if rec.numero_participantes < 2:
+            confirmed = rec.inscripcion_ids.filtered(lambda r: r.state == 'confirmed')
+            if len(confirmed) < 2:
                 raise UserError('Se necesitan al menos 2 participantes inscritos para iniciar el torneo.')
             rec.state = 'ongoing'
+            rec.message_post(body='El torneo se ha iniciado con %s participantes confirmados.' % len(confirmed))
 
     def action_finalize_tournament(self):
         for rec in self:
-            if rec.state not in ('ongoing', 'open'):
-                raise UserError('Solo se puede finalizar un torneo que esté en curso o con inscripciones abiertas.')
+            if rec.state == 'done':
+                raise UserError('El torneo ya está finalizado.')
+            if rec.state == 'cancel':
+                raise UserError('No se puede finalizar un torneo cancelado.')
+            if rec.state != 'ongoing':
+                raise UserError('Solo se puede finalizar un torneo en curso.')
+            unfinished = rec.partida_ids.filtered(lambda m: m.state not in ('finished', 'walkover'))
+            if unfinished:
+                raise UserError('No se puede finalizar: hay partidas pendientes de resultado.')
             rec.state = 'done'
+            rec.message_post(body='El torneo se ha finalizado correctamente.')
+
+    def action_cancel_tournament(self):
+        for rec in self:
+            if rec.state == 'done':
+                raise UserError('Un torneo finalizado no puede cancelarse.')
+            if rec.state == 'cancel':
+                raise UserError('El torneo ya está cancelado.')
+            rec.state = 'cancel'
+            rec.message_post(body='El torneo ha sido cancelado.')
 
     def action_notify_participants(self, subject=None, body=None):
         subject = subject or 'Notificación del torneo'
         for rec in self:
+            if rec.state == 'done':
+                raise UserError('El torneo está finalizado y no permite nuevas notificaciones desde este botón.')
+            if rec.state == 'cancel':
+                raise UserError('El torneo está cancelado y no permite notificaciones.')
             if not rec.participante_ids:
-                continue
+                raise UserError('No hay participantes para notificar en este torneo.')
             msg = body or ('Notificación del torneo %s (estado: %s)' % (rec.nombre or '', rec.state or ''))
             
             # Enviamos un mensaje a cada participante (esto crea mail.message y notifica al partner)
@@ -119,6 +153,8 @@ class EsportsTournament(models.Model):
         for rec in self:
             if rec.state == 'done' and not self.env.user.has_group('nexusarena.group_tourney_admin'):
                 raise UserError('El torneo está finalizado y no puede ser editado.')
+            if rec.state == 'cancel' and 'state' not in vals and not self.env.user.has_group('nexusarena.group_tourney_admin'):
+                raise UserError('El torneo está cancelado y no puede editarse.')
         return super(EsportsTournament, self).write(vals)
 
     def unlink(self):

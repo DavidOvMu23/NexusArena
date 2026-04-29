@@ -6,6 +6,7 @@ class EsportsStanding(models.Model):
     # Tabla de clasificación final de participantes por torneo.
     _name = 'esports.standing'
     _description = 'Clasificación del Torneo'
+    _inherit = ['mail.thread']
     
     # Campos
     posicion_final = fields.Integer(string="Posición Final")
@@ -66,6 +67,14 @@ class EsportsStanding(models.Model):
     # en función del premio obtenido por su posición final en el torneo.
     def action_generate_prize_invoice(self):
         for rec in self:
+            if rec.torneo_id.state != 'done':
+                raise UserError('Solo se puede generar factura de premio cuando el torneo está finalizado.')
+            if rec.factura_id:
+                raise UserError('Ya existe una factura de premio para esta clasificación.')
+            if not rec.participante_id:
+                raise UserError('Debe indicar el participante para generar la factura de premio.')
+            if not rec.posicion_final:
+                raise UserError('Debe indicar la posición final para calcular el premio.')
             # El importe del premio se obtiene del campo premio_obtenido calculado previamente. 
             #Si el importe es cero o negativo, se lanza un error indicando que no hay premio asignado para esa posición.
             amount = rec.premio_obtenido or 0.0

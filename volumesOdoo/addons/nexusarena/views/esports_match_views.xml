@@ -31,7 +31,7 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight"/>
+                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight" invisible="state in ('finished', 'walkover')"/>
                 </header>
                 <sheet>
                     <group>

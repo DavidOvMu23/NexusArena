@@ -7,6 +7,7 @@ class EsportsRegistration(models.Model):
     # Nombre del modelo y descripción
     _name = 'esports.registration'
     _description = 'Inscripción de Participante'
+    _inherit = ['mail.thread']
 
     # Campos de la inscripción de un participante a un torneo.
     fecha_inscripcion = fields.Date(string="Fecha Inscripción", default=fields.Date.context_today)
@@ -72,6 +73,12 @@ class EsportsRegistration(models.Model):
     # Acción para confirmar la inscripción, que genera una factura de venta para la cuota de inscripción del torneo.
     def action_confirm_registration(self):
         self.ensure_one()
+        if self.torneo_id.state == 'done':
+            raise UserError('No se puede confirmar una inscripción de un torneo finalizado.')
+        if self.torneo_id.state == 'cancel':
+            raise UserError('No se puede confirmar una inscripción de un torneo cancelado.')
+        if self.torneo_id.state != 'open':
+            raise UserError('Solo se pueden confirmar inscripciones cuando el torneo está en inscripciones abiertas.')
         if self.state != 'pending':
             raise UserError('Solo se pueden confirmar inscripciones en estado Pendiente de Pago.')
 

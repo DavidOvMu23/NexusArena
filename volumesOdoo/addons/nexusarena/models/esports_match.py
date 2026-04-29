@@ -6,6 +6,7 @@ class EsportsMatch(models.Model):
 	# Nombre del modelo y descripción
 	_name = 'esports.match'
 	_description = 'Partida de eSports'
+	_inherit = ['mail.thread']
 
 	# Campos de la partida.
 	fase = fields.Selection([
@@ -76,8 +77,22 @@ class EsportsMatch(models.Model):
 	# un mensaje en el hilo del torneo indicando que se ha registrado el resultado para esa partida.
 	def action_register_result(self):
 		for rec in self:
+			if rec.torneo_id.state == 'done':
+				raise UserError('No se puede registrar resultado en un torneo finalizado.')
+			if rec.torneo_id.state == 'cancel':
+				raise UserError('No se puede registrar resultado en un torneo cancelado.')
+			if rec.torneo_id.state != 'ongoing':
+				raise UserError('Solo se pueden registrar resultados con el torneo en curso.')
+			if rec.state in ('finished', 'walkover'):
+				raise UserError('Esta partida ya está cerrada y no admite nuevos resultados.')
+			if not rec.participante_local or not rec.participante_visitante:
+				raise UserError('Debe definir participante local y visitante antes de registrar resultado.')
+			if rec.participante_local.id == rec.participante_visitante.id:
+				raise UserError('Local y visitante no pueden ser el mismo participante.')
 			if rec.puntuacion_local is None or rec.puntuacion_visitante is None:
 				raise UserError('Rellene las puntuaciones antes de registrar el resultado.')
+			if rec.puntuacion_local < 0 or rec.puntuacion_visitante < 0:
+				raise UserError('Las puntuaciones no pueden ser negativas.')
 
 			# Determinar ganador
 			if rec.puntuacion_local > rec.puntuacion_visitante:

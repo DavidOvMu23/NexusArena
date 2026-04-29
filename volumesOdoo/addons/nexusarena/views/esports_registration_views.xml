@@ -57,7 +57,7 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight"/>
+                    <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight" invisible="state != 'pending'"/>
                 </header>
                 <sheet>
                     <group>
