@@ -37,15 +37,19 @@ class EsportsRegistration(models.Model):
 
     #aqui lo que hacemos es sobreescribir el método create para añadir una validación que impida que un mismo participante 
     #se inscriba varias veces en el mismo torneo.
-    @api.model_create_single
-    def create(self, vals):
-        torneo_id = vals.get('torneo_id')
-        participante_id = vals.get('participante_id')
-        if torneo_id and participante_id:
-            exists = self.search([('torneo_id', '=', torneo_id), ('participante_id', '=', participante_id)], limit=1)
-            if exists:
-                raise UserError('El participante ya está inscrito en este torneo.')
-        return super(EsportsRegistration, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            torneo_id = vals.get('torneo_id')
+            participante_id = vals.get('participante_id')
+            if torneo_id and participante_id:
+                exists = self.search([
+                    ('torneo_id', '=', torneo_id),
+                    ('participante_id', '=', participante_id),
+                ], limit=1)
+                if exists:
+                    raise UserError('El participante ya está inscrito en este torneo.')
+        return super().create(vals_list)
 
 
     # Calculamos los días transcurridos desde la fecha de inscripción hasta hoy para mostrar esta 
