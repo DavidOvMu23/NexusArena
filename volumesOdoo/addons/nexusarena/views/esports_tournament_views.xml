@@ -67,10 +67,11 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight"/>
-                    <button name="action_start_tournament" type="object" string="Iniciar torneo"/>
-                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo"/>
-                    <button name="action_notify_participants" type="object" string="Notificar participantes"/>
+                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_start_tournament" type="object" string="Iniciar torneo" invisible="state != 'open'"/>
+                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'"/>
+                    <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')"/>
+                    <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')"/>
                 </header>
                 <sheet>
                     <group>
