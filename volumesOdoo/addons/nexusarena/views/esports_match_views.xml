@@ -7,15 +7,15 @@
         <field name="name">esports.match.list</field>
         <field name="model">esports.match</field>
         <field name="arch" type="xml">
-            <list string="Partidas">
+            <list string="Partidas" decoration-success="state == 'playing'"> <!-- Decoramos la fila si el estado es 'playing' -->
                 <field name="torneo_id"/>
                 <field name="fase"/>
                 <field name="fecha_hora_programada"/>
                 <field name="participante_local"/>
                 <field name="participante_visitante"/>
-                <field name="state"/>
-                <field name="puntuacion_local"/>
-                <field name="puntuacion_visitante"/>
+                <field name="state" widget="badge" decoration-success="state == 'playing'"/> <!-- Mostramos el estado como una badge y decoramos la fila si está en juego -->
+                <field name="puntuacion_local" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación local sea solo lectura si la partida está finalizada o es walkover -->
+                <field name="puntuacion_visitante" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación visitante sea solo lectura si la partida está finalizada o es walkover --> 
             </list>
         </field>
     </record>
@@ -31,22 +31,22 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight" invisible="state in ('finished', 'walkover')"/>
+                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight" invisible="state in ('finished', 'walkover')"/> <!-- El botón solo se muestra si la partida no está finalizada ni es walkover -->
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="torneo_id"/>
                             <field name="fase"/>
-                            <field name="state"/>
+                            <field name="state" widget="statusbar" statusbar_visible="scheduled,playing,finished,walkover"/> <!-- Mostramos el estado como una barra de estado con los estados visibles -->
                             <field name="fecha_hora_programada"/>
                         </group>
                         <group>
                             <field name="participante_local"/>
                             <field name="participante_visitante"/>
-                            <field name="puntuacion_local"/>
-                            <field name="puntuacion_visitante"/>
-                            <field name="resultado"/>
+                            <field name="puntuacion_local" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación local sea solo lectura si la partida está finalizada o es walkover -->
+                            <field name="puntuacion_visitante" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación visitante sea solo lectura si la partida está finalizada o es walkover -->
+                            <field name="resultado" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de resultado sea solo lectura si la partida está finalizada o es walkover -->
 
 
 
@@ -70,10 +70,10 @@
                 <field name="participante_visitante"/>
                 <field name="state"/>
                 <field name="fase"/>
-                <filter string="Programada" name="filter_state_scheduled" domain="[('state', '=', 'scheduled')]"/>
-                <filter string="En Juego" name="filter_state_playing" domain="[('state', '=', 'playing')]"/>
-                <filter string="Finalizada" name="filter_state_finished" domain="[('state', '=', 'finished')]"/>
-                <filter string="Walkover" name="filter_state_walkover" domain="[('state', '=', 'walkover')]"/>
+                <filter string="Programada" name="filter_state_scheduled" domain="[('state', '=', 'scheduled')]"/> <!-- Filtro para partidas programadas -->
+                <filter string="En Juego" name="filter_state_playing" domain="[('state', '=', 'playing')]"/> <!-- Filtro para partidas en juego -->
+                <filter string="Finalizada" name="filter_state_finished" domain="[('state', '=', 'finished')]"/> <!-- Filtro para partidas finalizadas -->
+                <filter string="Walkover" name="filter_state_walkover" domain="[('state', '=', 'walkover')]"/> <!-- Filtro para partidas con walkover -->
             </search>
         </field>
     </record>

@@ -7,7 +7,7 @@
         <field name="name">esports.tournament.list</field>
         <field name="model">esports.tournament</field>
         <field name="arch" type="xml">
-            <list string="Torneos">
+            <list string="Torneos" decoration-muted="state == 'cancel'">
                 <field name="nombre"/>
                 <field name="edicion"/>
                 <field name="videojuego_id"/>
@@ -15,7 +15,7 @@
                 <field name="modalidad"/>
                 <field name="fecha_inicio"/>
                 <field name="fecha_fin"/>
-                <field name="state"/>
+                <field name="state" widget="badge" decoration-muted="state == 'cancel'"/> <!-- El widget badge muestra el estado con un estilo de etiqueta, y decoration-muted lo atenua si el estado es 'cancel' -->
                 <field name="premio_total"/>
             </list>
         </field>
@@ -48,6 +48,7 @@
                             </div>
                             <div>
                                 <strong>Participantes:</strong>
+                                <!-- Aquí mostramos el número de inscripciones -->
                                 <span t-esc="record.inscripcion_ids.raw_value.length"/>
                             </div>
                         </main>
@@ -67,11 +68,11 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight" invisible="state != 'draft'"/>
-                    <button name="action_start_tournament" type="object" string="Iniciar torneo" invisible="state != 'open'"/>
-                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'"/>
-                    <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')"/>
-                    <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')"/>
+                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight" invisible="state != 'draft'"/> <!-- El botón para abrir inscripciones solo se muestra si el estado es 'draft' -->
+                    <button name="action_start_tournament" type="object" string="Iniciar torneo" invisible="state != 'open'"/> <!-- El botón para iniciar el torneo solo se muestra si el estado es 'open' -->
+                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'"/> <!-- El botón para finalizar el torneo solo se muestra si el estado es 'ongoing' -->
+                    <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')"/> <!-- El botón para notificar participantes solo se muestra si el estado no es 'done' ni 'cancel' -->
+                    <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')"/> <!-- El botón para cancelar el torneo solo se muestra si el estado no es 'done' ni 'cancel', y muestra una confirmación antes de ejecutar la acción -->
                 </header>
                 <sheet>
                     <group>
@@ -80,7 +81,7 @@
                             <field name="edicion"/>
                             <field name="videojuego_id"/>
                             <field name="es_publico"/>
-                            <field name="state"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,open,ongoing,done,cancel"/> <!-- hacemos que el statusbar sea visible haciendo visible en todos los estados -->
                         </group>
                         <group>
                             <field name="formato"/>
@@ -119,17 +120,17 @@
                 <field name="videojuego_id"/>
                 <field name="state"/>
                 <field name="formato"/>
-                <filter string="Borrador" name="filter_state_draft" domain="[('state', '=', 'draft')]"/>
-                <filter string="Inscripciones Abiertas" name="filter_state_open" domain="[('state', '=', 'open')]"/>
-                <filter string="En Curso" name="filter_state_ongoing" domain="[('state', '=', 'ongoing')]"/>
-                <filter string="Finalizado" name="filter_state_done" domain="[('state', '=', 'done')]"/>
+                <filter string="Borrador" name="filter_state_draft" domain="[('state', '=', 'draft')]"/> <!-- filtro para mostrar solo los torneos en estado borrador -->
+                <filter string="Inscripciones Abiertas" name="filter_state_open" domain="[('state', '=', 'open')]"/> <!-- filtro para mostrar solo los torneos con inscripciones abiertas -->
+                <filter string="En Curso" name="filter_state_ongoing" domain="[('state', '=', 'ongoing')]"/> <!-- filtro para mostrar solo los torneos en curso -->
+                <filter string="Finalizado" name="filter_state_done" domain="[('state', '=', 'done')]"/> <!-- filtro para mostrar solo los torneos finalizados -->
                 <separator/>
-                <filter string="Con Videojuego" name="filter_videojuego_set" domain="[('videojuego_id', '!=', False)]"/>
-                <filter string="Agrupar por Videojuego" name="group_by_videojuego" context="{'group_by': 'videojuego_id'}"/>
+                <filter string="Con Videojuego" name="filter_videojuego_set" domain="[('videojuego_id', '!=', False)]"/> <!-- filtro para mostrar solo los torneos que tienen un videojuego asignado -->
+                <filter string="Agrupar por Videojuego" name="group_by_videojuego" context="{'group_by': 'videojuego_id'}"/> <!-- filtro para agrupar los torneos por videojuego -->
                 <separator/>
-                <filter string="Liga" name="filter_formato_league" domain="[('formato', '=', 'league')]"/>
-                <filter string="Elim. Directa" name="filter_formato_direct" domain="[('formato', '=', 'direct')]"/>
-                <filter string="Doble Elim." name="filter_formato_double" domain="[('formato', '=', 'double')]"/>
+                <filter string="Liga" name="filter_formato_league" domain="[('formato', '=', 'league')]"/> <!-- filtro para mostrar solo los torneos con formato de liga -->
+                <filter string="Elim. Directa" name="filter_formato_direct" domain="[('formato', '=', 'direct')]"/> <!-- filtro para mostrar solo los torneos con formato de eliminación directa -->
+                <filter string="Doble Elim." name="filter_formato_double" domain="[('formato', '=', 'double')]"/> <!-- filtro para mostrar solo los torneos con formato de doble eliminación -->
             </search>
         </field>
     </record>

@@ -9,14 +9,20 @@ class EsportsRegistration(models.Model):
     _description = 'Inscripción de Participante'
     _inherit = ['mail.thread']
 
-    # Campos de la inscripción de un participante a un torneo.
+
+
+
+    # ----- Atributos de la inscripción -----
     fecha_inscripcion = fields.Date(string="Fecha Inscripción", default=fields.Date.context_today)
 
     state = fields.Selection([
         ('pending', 'Pendiente de Pago'), ('confirmed', 'Confirmada'), ('disqualified', 'Descalificada')
     ], default='pending')
 
-    # Relaciones
+
+
+
+    # ----- Relaciones -----
     torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)
     standing_ids = fields.One2many('esports.standing', 'inscripcion_id', string='Clasificación asociada')
@@ -28,29 +34,13 @@ class EsportsRegistration(models.Model):
         string='Miembros del equipo',
     )
 
-    # Campos calculados
+
+
+
+    # ----- Campos calculados -----
     #Compute es para indicar que el valor de este campo se calcula a partir de otros campos, y store=True es para 
     #almacenar el resultado en la base de datos y no tener que recalcularlo cada vez que se accede a él.
     dias_desde_inscripcion = fields.Integer(string='Días desde inscripción', compute='_compute_dias_desde_inscripcion', store=True)
-
-    # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
-    # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
-
-    #aqui lo que hacemos es sobreescribir el método create para añadir una validación que impida que un mismo participante 
-    #se inscriba varias veces en el mismo torneo.
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            torneo_id = vals.get('torneo_id')
-            participante_id = vals.get('participante_id')
-            if torneo_id and participante_id:
-                exists = self.search([
-                    ('torneo_id', '=', torneo_id),
-                    ('participante_id', '=', participante_id),
-                ], limit=1)
-                if exists:
-                    raise UserError('El participante ya está inscrito en este torneo.')
-        return super().create(vals_list)
 
     # Calculamos los días transcurridos desde la fecha de inscripción hasta hoy para mostrar esta 
     # información en la vista del formulario de inscripción.
@@ -69,6 +59,48 @@ class EsportsRegistration(models.Model):
             ).days
 
 
+
+
+    # ----- Restricciones -----
+    #aqui lo que hacemos es sobreescribir el método create para añadir una validación que impida que un mismo participante 
+    #se inscriba varias veces en el mismo torneo.
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            torneo_id = vals.get('torneo_id')
+            participante_id = vals.get('participante_id')
+            if torneo_id and participante_id:
+                exists = self.search([
+                    ('torneo_id', '=', torneo_id),
+                    ('participante_id', '=', participante_id),
+                ], limit=1)
+                if exists:
+                    raise UserError('El participante ya está inscrito en este torneo.')
+        return super().create(vals_list)
+
+
+
+
+
+    # ----- Validaciones -----
+    @api.constrains('torneo_id', 'participante_id')
+    def _check_unique_registration(self):
+        for rec in self:
+            if not rec.torneo_id or not rec.participante_id:
+                continue
+            duplicate = self.search([
+                ('id', '!=', rec.id),
+                ('torneo_id', '=', rec.torneo_id.id),
+                ('participante_id', '=', rec.participante_id.id),
+            ], limit=1)
+            if duplicate:
+                raise UserError('El participante ya está inscrito en este torneo.')
+
+
+
+
+
+    # ----- Metodos de acción -----
     # Acción para confirmar la inscripción, que genera una factura de venta para la cuota de inscripción del torneo.
     def action_confirm_registration(self):
         self.ensure_one()
@@ -108,7 +140,7 @@ class EsportsRegistration(models.Model):
 
         # Crear los valores para la factura de cuota de inscripción, incluyendo el tipo de movimiento, el cliente, la fecha, 
         #el diario, el origen y las líneas de factura con la descripción de la cuota y el importe.
-        move_vals = { 
+        move_vals = {
             'move_type': 'out_invoice',
             'partner_id': self.participante_id.id,
             'invoice_date': fields.Date.context_today(self),
@@ -138,17 +170,3 @@ class EsportsRegistration(models.Model):
             pass
 
         return invoice
-
-    #aqui añadimos una restricción a nivel de modelo para evitar que se creen registros de inscripción duplicados para el mismo torneo y participante,
-    @api.constrains('torneo_id', 'participante_id')
-    def _check_unique_registration(self):
-        for rec in self:
-            if not rec.torneo_id or not rec.participante_id:
-                continue
-            duplicate = self.search([
-                ('id', '!=', rec.id),
-                ('torneo_id', '=', rec.torneo_id.id),
-                ('participante_id', '=', rec.participante_id.id),
-            ], limit=1)
-            if duplicate:
-                raise UserError('El participante ya está inscrito en este torneo.')

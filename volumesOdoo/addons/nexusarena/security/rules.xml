@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- REGLA DE REGISTRO PARA PARTICIPANTE -->
-
     <!-- No se si está bien, por que no recuerdo que dieramos esto en clase
     ni en el tutorial guiado que dimos en la pagina de odoo que tuvimos que entregar -->
 
+    <!-- REGLA DE REGISTRO PARA PARTICIPANTE -->
     <!--Ponemos ir.rule para hacer que odoo interprete esto como una regla de acceso -->
     <record id="rule_registration_participant" model="ir.rule">
         <field name="name">Participante: Solo sus propias inscripciones</field>
@@ -28,7 +27,7 @@
 
 
     <!-- REGLA DE REGISTRO PARA PARTICIPANTE EN TORNEOS PÚBLICOS -->
-
+    <!-- Esta regla permite a los participantes ver solo los torneos públicos comprobando que el campo es_publico sea True -->
     <record id="rule_tournament_participant_public" model="ir.rule">
         <field name="name">Participante: Solo torneos públicos</field>
         <field name="model_id" ref="model_esports_tournament"/>
@@ -40,3 +39,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
 </odoo>
+
+<!-- aunque estas reglas anteriores vayan dirigidas a los participantes, no se podrían hacer juntas por que la primera
+ va dirigida a el modelo de las inscripciones y la segunda a el modelo de los torneos aunque la mayoria de las lineas de las 
+ dos reglas son iguales y los permisos sean iguales-->

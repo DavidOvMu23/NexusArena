@@ -5,14 +5,21 @@ from odoo.exceptions import UserError
 class EsportsStanding(models.Model):
     # Tabla de clasificación final de participantes por torneo.
     _name = 'esports.standing'
-    _inherit = ['mail.thread']
     _description = 'Clasificación del Torneo'
     _inherit = ['mail.thread']
-    
-    # Campos
+
+
+
+
+    # ----- Atributos -----
     posicion_final = fields.Integer(string="Posición Final")
 
-    # Relaciones
+
+
+
+
+
+    # ----- Relaciones -----
     torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)
     inscripcion_id = fields.Many2one('esports.registration', string='Inscripción')
@@ -28,7 +35,11 @@ class EsportsStanding(models.Model):
     )
     factura_id = fields.Many2one('account.move', string="Factura de Premio", readonly=True)
 
-    # Campos calculados
+
+
+
+
+    # ----- Campos calculados -----
     # Compute es para indicar que el valor de este campo se calcula a partir de otros campos, y store=True es para 
     # almacenar el resultado en la base de datos y no tener que recalcularlo cada vez que se accede a él.
     partidas_jugadas = fields.Integer(string='Partidas jugadas', compute='_compute_stats', store=True)
@@ -39,10 +50,8 @@ class EsportsStanding(models.Model):
 
     # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
     @api.depends('partida_ids.ganador_id', 'partida_ids.state')
-
     # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
     def _compute_stats(self):
-
         for rec in self:
             # rec es para referirnos a cada registro individual dentro del modelo.
             finished = [m for m in rec.partida_ids if m.state == 'finished']
@@ -64,6 +73,23 @@ class EsportsStanding(models.Model):
             }
             rec.premio_obtenido = premios.get(rec.posicion_final, 0.0)
 
+
+
+
+
+    # ----- Restricciones -----
+    @api.constrains('posicion_final')
+    def _check_positive_position(self):
+        for rec in self:
+            if rec.posicion_final is not None and rec.posicion_final <= 0:
+                raise UserError('La posición final debe ser mayor que cero.')
+
+
+
+
+
+
+    # ----- Metodos de acción -----
     # El método action_generate_prize_invoice se encarga de generar una factura de premio para el participante 
     # en función del premio obtenido por su posición final en el torneo.
     def action_generate_prize_invoice(self):

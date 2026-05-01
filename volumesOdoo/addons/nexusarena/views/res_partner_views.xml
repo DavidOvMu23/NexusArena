@@ -32,7 +32,7 @@
                             <field name="name"/>
                             <field name="nick"/>
                             <field name="tipo_jugador"/>
-                            <field name="equipo_id" attrs="{'invisible': [('tipo_jugador', '!=', 'jugador')]}"/>
+                            <field name="equipo_id" invisible="tipo_jugador != 'jugador'"/> <!-- El campo equipo_id solo se muestra si el tipo de jugador es 'jugador' -->
                             <field name="experiencia"/>
                         </group>
                         <group>
@@ -40,7 +40,7 @@
                             <field name="plataforma"/>
                             <field name="email"/>
                             <field name="phone"/>
-                            <field name="jugador_ids" attrs="{'invisible': [('tipo_jugador', '!=', 'equipo')]}"/>
+                            <field name="jugador_ids" invisible="tipo_jugador != 'equipo'"/> <!-- El campo jugador_ids solo se muestra si el tipo de jugador es 'equipo' -->
                         </group>
                     </group>
                 </sheet>
@@ -59,31 +59,32 @@
                 <field name="tipo_jugador"/>
                 <field name="plataforma"/>
                 <field name="experiencia"/>
-                <filter string="Jugador" name="filter_jugador" domain="[('tipo_jugador', '=', 'jugador')]"/>
-                <filter string="Equipo" name="filter_equipo" domain="[('tipo_jugador', '=', 'equipo')]"/>
+                <filter string="Jugador" name="filter_jugador" domain="[('tipo_jugador', '=', 'jugador')]"/> <!-- Filtro para mostrar solo jugadores -->
+                <filter string="Equipo" name="filter_equipo" domain="[('tipo_jugador', '=', 'equipo')]"/> <!-- Filtro para mostrar solo equipos -->
                 <separator/>
-                <filter string="PC" name="filter_plataforma_pc" domain="[('plataforma', '=', 'pc')]"/>
-                <filter string="Consola" name="filter_plataforma_console" domain="[('plataforma', '=', 'console')]"/>
-                <filter string="Móvil" name="filter_plataforma_mobile" domain="[('plataforma', '=', 'mobile')]"/>
+                <filter string="PC" name="filter_plataforma_pc" domain="[('plataforma', '=', 'pc')]"/> <!-- Filtro para mostrar solo participantes que juegan en PC -->
+                <filter string="Consola" name="filter_plataforma_console" domain="[('plataforma', '=', 'console')]"/> <!-- Filtro para mostrar solo participantes que juegan en consola -->
+                <filter string="Móvil" name="filter_plataforma_mobile" domain="[('plataforma', '=', 'mobile')]"/> <!-- Filtro para mostrar solo participantes que juegan en móvil -->
             </search>
         </field>
     </record>
 
     <!-- Estas son las distintas acciones para cambiar entre los tipos de vistas-->
     <record id="action_esports_participant" model="ir.actions.act_window"> <!-- ir.actions.act_window indica a odoo que lo que estamos haciendo es una acción de ventana-->
-        <field name="name">Participantes</field> <!--nombre de la acción que aparecerá en el menú-->
-        <field name="res_model">res.partner</field> <!--indicamos el modelo al que se refiere la acción-->
-        <field name="view_mode">list,form</field> <!--indicamos los modos de vista disponibles-->
-        <field name="domain">[('tipo_jugador', '!=', False)]</field> <!--indicamos el dominio de búsqueda-->
-        <field name="context">{'default_tipo_jugador': 'jugador'}</field> <!--indicamos el contexto de la acción-->
-        <field name="search_view_id" ref="view_esports_participant_search"/> <!--referenciamos la vista de búsqueda personalizada-->
+        <field name="name">Participantes</field> <!--nombre de la acción que se mostrará en el menú-->
+        <field name="res_model">res.partner</field> <!--modelo al que se aplicará la acción, en este caso res.partner que es el modelo de contactos de odoo-->
+        <field name="view_mode">list,form</field> <!--modos de vista disponibles para esta acción, en este caso lista y formulario-->
+        <field name="domain">[('tipo_jugador', '!=', False)]</field> <!--dominio para filtrar los registros que se mostrarán, en este caso solo aquellos que tengan un tipo de jugador definido-->
+        <field name="context">{'default_tipo_jugador': 'jugador'}</field> <!--contexto para establecer valores por defecto al crear un nuevo registro, pongo en la vista que el tipo de jugador por defecto sea 'jugador'-->
+        <field name="search_view_id" ref="view_esports_participant_search"/> <!-- referenciamos a la vista de búsqueda de arriba-->
     </record>
 
+    <!-- Vistas para la acción de ventana -->
     <record id="action_esports_participant_list_view" model="ir.actions.act_window.view">
         <field name="sequence" eval="1"/>
         <field name="view_mode">list</field>
-        <field name="view_id" ref="view_esports_participant_list"/>
-        <field name="act_window_id" ref="action_esports_participant"/>
+        <field name="view_id" ref="view_esports_participant_list"/> <!-- referenciamos a la vista de lista de arriba-->
+        <field name="act_window_id" ref="action_esports_participant"/> <!-- referenciamos a la acción de ventana de arriba para asociar esta vista a esa acción-->
     </record>
 
     <record id="action_esports_participant_form_view" model="ir.actions.act_window.view">

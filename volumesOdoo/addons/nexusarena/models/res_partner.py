@@ -7,37 +7,36 @@ class ResPartner(models.Model):
     #Usamos el modelo contactos de Odoo y a partir de ahí añadimos el resto de campos
     #que nos interesen, en nuestro caso, los relacionados con los participantes
 
-    # Datos competitivos de un participante
+
+
+    # ----- Atributos de los participantes -----
     tipo_jugador = fields.Selection([
         ('jugador', 'Jugador Individual'),
         ('equipo', 'Equipo Competitivo'),
     ], string="Tipo de Jugador")
-
     nick = fields.Char(string="Nick / Nombre Equipo")
-
     pais_origen = fields.Char(string="País de Origen")
-
     plataforma = fields.Selection([
         ('pc', 'PC'), ('console', 'Consola'), ('mobile', 'Móvil')
     ], string="Plataforma")
-
     experiencia = fields.Selection([
         ('amateur', 'Amateur'), ('pro', 'Profesional'), ('semi', 'Semiprofesional')
     ], string="Nivel de Experiencia")
-
     equipo_id = fields.Many2one(
         'res.partner',
         string='Equipo',
         domain=[('tipo_jugador', '=', 'equipo')],
     )
-
     jugador_ids = fields.One2many(
         'res.partner',
         'equipo_id',
         string='Jugadores integrantes',
     )
 
-    # Relaciones
+
+
+
+    # ----- Relaciones -----
     juego_principal_id = fields.Many2one('esports.game', string='Juego principal')
     inscripcion_ids = fields.One2many('esports.registration', 'participante_id', string='Inscripciones')
     clasificacion_ids = fields.One2many('esports.standing', 'participante_id', string='Clasificaciones')
@@ -74,12 +73,10 @@ class ResPartner(models.Model):
     )
 
 
-    #Lo que pone en el enunciado de "para equipos", todavía no se hacerlo
-    #entonces de momento no lo pongo, pero la idea sería que si el tipo de jugador es "equipo", 
-    #entonces aparezca un campo para añadir los miembros del equipo, que podrían ser otros contactos de Odoo, 
-    #y si el tipo de jugador es "jugador individual", entonces ese campo no aparezca.
 
-    # Campos calculados
+
+
+    # ----- Campos calculados -----
     # compute es para indicar que el valor de este campo se calcula a partir de otros campos, y store=True es para
     # almacenar el resultado en la base de datos y no tener que recalcularlo cada vez que se accede a él.
     total_participaciones = fields.Integer(string='Total participaciones', compute='_compute_stats', store=True)

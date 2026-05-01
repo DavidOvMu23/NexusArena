@@ -51,11 +51,11 @@
                 <field name="desarrollador"/>
                 <field name="genero"/>
                 <field name="modalidad"/>
-                <filter string="MOBA" name="filter_genero_moba" domain="[('genero', '=', 'moba')]"/>
-                <filter string="FPS" name="filter_genero_fps" domain="[('genero', '=', 'fps')]"/>
+                <filter string="MOBA" name="filter_genero_moba" domain="[('genero', '=', 'moba')]"/> <!-- Filtro para juegos MOBA -->
+                <filter string="FPS" name="filter_genero_fps" domain="[('genero', '=', 'fps')]"/> <!-- Filtro para juegos FPS -->
                 <separator/>
-                <filter string="Individual" name="filter_modalidad_individual" domain="[('modalidad', '=', 'individual')]"/>
-                <filter string="Equipos" name="filter_modalidad_teams" domain="[('modalidad', '=', 'teams')]"/>
+                <filter string="Individual" name="filter_modalidad_individual" domain="[('modalidad', '=', 'individual')]"/> <!-- Filtro para juegos individuales -->
+                <filter string="Equipos" name="filter_modalidad_teams" domain="[('modalidad', '=', 'teams')]"/> <!-- Filtro para juegos por equipos -->
             </search>
         </field>
     </record>

@@ -29,7 +29,7 @@
                 <templates>
                     <t t-name="card">
                         <main class="o_kanban_card_content">
-                            <div class="mb-1">
+                            <div class="mb-1"> 
                                 <strong><field name="participante_id"/></strong>
                             </div>
                             <div class="text-muted mb-1">
@@ -57,7 +57,7 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight" invisible="state != 'pending'"/> <!-- El botón solo se muestra si el estado es 'pending' -->
                 </header>
                 <sheet>
                     <group>
@@ -67,7 +67,7 @@
                         </group>
                         <group>
                             <field name="fecha_inscripcion"/>
-                            <field name="state"/>
+                            <field name="state" widget="statusbar" statusbar_visible="pending,confirmed,disqualified"/> <!-- hacemos que el statusbar sea visible haciendo visible en todos los estados -->
 
 
 
@@ -90,11 +90,11 @@
                 <field name="participante_id"/>
                 <field name="state"/>
                 <field name="fecha_inscripcion"/>
-                <filter string="Pendiente" name="filter_state_pending" domain="[('state', '=', 'pending')]"/>
-                <filter string="Confirmada" name="filter_state_confirmed" domain="[('state', '=', 'confirmed')]"/>
-                <filter string="Descalificada" name="filter_state_disqualified" domain="[('state', '=', 'disqualified')]"/>
+                <filter string="Pendiente" name="filter_state_pending" domain="[('state', '=', 'pending')]"/> <!-- Filtro para mostrar solo inscripciones pendientes -->
+                <filter string="Confirmada" name="filter_state_confirmed" domain="[('state', '=', 'confirmed')]"/> <!-- Filtro para mostrar solo inscripciones confirmadas -->
+                <filter string="Descalificada" name="filter_state_disqualified" domain="[('state', '=', 'disqualified')]"/> <!-- Filtro para mostrar solo inscripciones descalificadas -->
                 <separator/>
-                <filter string="Agrupar por state" name="group_by_state" context="{'group_by': 'state'}"/>
+                <filter string="Agrupar por state" name="group_by_state" context="{'group_by': 'state'}"/> <!-- Opción para agrupar por estado de inscripción -->
             </search>
         </field>
     </record>
@@ -105,7 +105,7 @@
         <field name="res_model">esports.registration</field> <!--indicamos el modelo al que se aplicará la acción-->
         <field name="view_mode">kanban,list,form</field> <!--indicamos los modos de vista disponibles-->
         <field name="search_view_id" ref="view_esports_registration_search"/> <!--referenciamos la vista de búsqueda personalizada para inscripciones-->
-        <field name="context">{'search_default_group_by_state': 1}</field>
+        <field name="context">{'search_default_group_by_state': 1}</field> <!-- Hacemos que por defecto se agrupe por estado de inscripción al abrir la vista-->
     </record>
 
     <record id="action_esports_registration_kanban_view" model="ir.actions.act_window.view">

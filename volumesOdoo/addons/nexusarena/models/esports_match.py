@@ -8,7 +8,9 @@ class EsportsMatch(models.Model):
 	_description = 'Partida de eSports'
 	_inherit = ['mail.thread']
 
-	# Campos de la partida.
+
+
+	# ----- Atributos de la partida -----
 	fase = fields.Selection([
 		('groups', 'Grupos'),
 		('quarterfinal', 'Cuartos'),
@@ -16,24 +18,22 @@ class EsportsMatch(models.Model):
 		('final', 'Final'),
 		('third_place', 'Tercer puesto'),
 	], string='Fase')
-
 	fecha_hora_programada = fields.Datetime(string='Fecha y hora programada')
-
-	# state de la partida.
 	state = fields.Selection([
 		('scheduled', 'Programada'),
 		('playing', 'En juego'),
 		('finished', 'Finalizada'),
 		('walkover', 'Walkover'),
 	], string='state', default='scheduled')
-
 	resultado = fields.Integer(string='Resultado')
 	puntuacion_local = fields.Integer(string='Puntuación local')
 	puntuacion_visitante = fields.Integer(string='Puntuación visitante')
-
 	ganador_id = fields.Many2one('res.partner', string='Ganador', compute='_compute_ganador', store=True)
 
-	# Relaciones
+
+
+
+	# ----- Relaciones -----
 	torneo_id = fields.Many2one('esports.tournament', string='Torneo')
 	participante_local = fields.Many2one('res.partner', string='Participante local')
 	participante_visitante = fields.Many2one('res.partner', string='Participante visitante')
@@ -53,8 +53,11 @@ class EsportsMatch(models.Model):
 		string='Árbitros',
 	)
 
-	# campos calculados
 
+
+
+
+	# ----- Campos calculados -----
 	# El método _compute_ganador calcula el ganador de la partida en función de las puntuaciones locales y visitantes.
 	# Si alguna de las puntuaciones es None, el ganador se establece como False. 
 	#Si la puntuación local es mayor que la visitante, el ganador es el participante local; si la puntuación visitante es mayor, 
@@ -71,6 +74,22 @@ class EsportsMatch(models.Model):
 			else:
 				rec.ganador_id = False
 
+
+
+
+		# ----- Restricciones -----
+	@api.constrains('puntuacion_local', 'puntuacion_visitante')
+	def _check_non_negative_scores(self):
+		for rec in self:
+			if rec.puntuacion_local is not None and rec.puntuacion_local < 0:
+				raise UserError('La puntuación local no puede ser negativa.')
+			if rec.puntuacion_visitante is not None and rec.puntuacion_visitante < 0:
+				raise UserError('La puntuación visitante no puede ser negativa.')
+
+
+
+
+	# ----- Métodos de acción -----
 	# El método action_register_result se encarga de registrar el resultado de la partida, marcándola como finalizada,
 	# determinando el ganador en función de las puntuaciones, asegurando que exista un standing para cada participante 
 	# y añadiendo la partida a su lista de partidas jugadas, y publicando
