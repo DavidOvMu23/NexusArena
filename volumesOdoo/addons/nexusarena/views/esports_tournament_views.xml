@@ -68,11 +68,11 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight" invisible="state != 'draft'"/> <!-- El botón para abrir inscripciones solo se muestra si el estado es 'draft' -->
-                    <button name="action_start_tournament" type="object" string="Iniciar torneo" invisible="state != 'open'"/> <!-- El botón para iniciar el torneo solo se muestra si el estado es 'open' -->
-                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'"/> <!-- El botón para finalizar el torneo solo se muestra si el estado es 'ongoing' -->
-                    <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')"/> <!-- El botón para notificar participantes solo se muestra si el estado no es 'done' ni 'cancel' -->
-                    <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')"/> <!-- El botón para cancelar el torneo solo se muestra si el estado no es 'done' ni 'cancel', y muestra una confirmación antes de ejecutar la acción -->
+                    <button name="action_open_inscriptions" type="object" string="Abrir inscripciones" class="oe_highlight" invisible="state != 'draft'" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer"/> <!-- El botón para abrir inscripciones solo se muestra si eres un usuario que no sea participante -->
+                    <button name="action_start_tournament" type="object" string="Iniciar torneo" invisible="state != 'open'" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer"/> 
+                    <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer"/>
+                    <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer"/>
+                    <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,open,ongoing,done"/> <!-- barra de progreso de estados visible en el encabezado -->
                 </header>
                 <sheet>
@@ -117,7 +117,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Partidas">
+                        <page string="Partidas" groups="nexusarena.group_tourney_admin,nexusarena.group_tourney_organizer">
                             <field name="partida_ids">
                                 <list>
                                     <field name="fase"/>

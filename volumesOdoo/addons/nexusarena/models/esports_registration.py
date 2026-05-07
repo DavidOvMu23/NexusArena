@@ -155,7 +155,10 @@ class EsportsRegistration(models.Model):
         }
 
         # Crear la factura de cuota de inscripción utilizando el modelo account.move y los valores definidos anteriormente.
-        invoice = self.env['account.move'].create(move_vals)
+        # sudo() permite que el organizador confirme inscripciones aunque no tenga permiso directo
+        # de creación en account.move. El organizador gestiona inscripciones (su rol lo permite),
+        # y la factura es una consecuencia automática del proceso, no una acción contable manual.
+        invoice = self.env['account.move'].sudo().create(move_vals)
 
         # Marcar como confirmada y añadir participante al torneo
         self.state = 'confirmed'

@@ -16,3 +16,4 @@ access_account_move_organizer,account.move organizer,account.model_account_move,
 access_esports_tournament_participant,esports.tournament participant,model_esports_tournament,group_tourney_participant,1,0,0,0
 access_esports_registration_participant,esports.registration participant,model_esports_registration,group_tourney_participant,1,0,0,0
 access_esports_standing_participant,esports.standing participant,model_esports_standing,group_tourney_participant,1,0,0,0
+access_esports_game_participant,esports.game participant,model_esports_game,group_tourney_participant,1,0,0,0

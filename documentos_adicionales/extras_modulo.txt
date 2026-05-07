@@ -1,0 +1,32 @@
+FUNCIONALIDADES EXTRA — Decisiones propias que mejoran el módulo
+
+1. Visibilidad de torneos para el participante (regla de registro ampliada)
+   El enunciado dice que el participante "solo puede ver los torneos públicos".
+   Lo he interpretado de forma más restrictiva y lógica: el participante solo ve
+   los torneos con inscripciones abiertas (donde puede apuntarse) y los torneos
+   en curso en los que él mismo está inscrito (para seguir su progreso). Los
+   torneos finalizados, cancelados o en borrador no le son de utilidad y no los ve.
+
+2. Notificaciones internas de Odoo (bandeja de entrada de Discuss)
+   El enunciado pide un botón "Notificar participantes" que use mail.message, lo
+   que se cumple publicando el mensaje en el chatter del torneo. De forma adicional,
+   el botón también envía la notificación directamente a la bandeja de entrada
+   personal (Discuss) de cada participante inscrito que tenga cuenta de usuario en
+   Odoo, de forma que le llegue un aviso sin necesidad de que entre al torneo.
+
+3. Botón "Cancelar torneo"
+   El enunciado solo pide tres botones de transición de estado. Se ha añadido un
+   botón de cancelación con diálogo de confirmación para gestionar torneos que no
+   llegan a celebrarse, bloqueando además su edición posterior igual que los finalizados.
+
+4. Botón "Iniciar partida"
+   El enunciado lista "en juego" como estado de una partida pero no exige botón
+   para activarlo. Se ha añadido para hacer la transición programada → en juego de
+   forma explícita, lo que permite mostrar correctamente el color verde en la lista
+   cuando una partida está activa.
+
+5. Pestañas de Partidas y Clasificación en el formulario del torneo
+   El enunciado no especifica cómo mostrar las líneas relacionadas del torneo.
+   Se han añadido como pestañas (notebook) para que desde el propio torneo se puedan
+   consultar sus inscripciones, partidas y clasificación sin tener que navegar a
+   otro menú.
