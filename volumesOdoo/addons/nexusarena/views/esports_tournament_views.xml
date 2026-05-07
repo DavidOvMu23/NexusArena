@@ -73,6 +73,7 @@
                     <button name="action_finalize_tournament" type="object" string="Finalizar torneo" invisible="state != 'ongoing'"/> <!-- El botón para finalizar el torneo solo se muestra si el estado es 'ongoing' -->
                     <button name="action_notify_participants" type="object" string="Notificar participantes" invisible="state in ('done', 'cancel')"/> <!-- El botón para notificar participantes solo se muestra si el estado no es 'done' ni 'cancel' -->
                     <button name="action_cancel_tournament" type="object" string="Cancelar torneo" confirm="¿Seguro que quieres cancelar el torneo?" invisible="state in ('done', 'cancel')"/> <!-- El botón para cancelar el torneo solo se muestra si el estado no es 'done' ni 'cancel', y muestra una confirmación antes de ejecutar la acción -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,ongoing,done"/> <!-- barra de progreso de estados visible en el encabezado -->
                 </header>
                 <sheet>
                     <group>
@@ -81,7 +82,6 @@
                             <field name="edicion"/>
                             <field name="videojuego_id"/>
                             <field name="es_publico"/>
-                            <field name="state" widget="statusbar" statusbar_visible="draft,open,ongoing,done,cancel"/> <!-- hacemos que el statusbar sea visible haciendo visible en todos los estados -->
                         </group>
                         <group>
                             <field name="formato"/>
@@ -98,13 +98,53 @@
                         <field name="premio_3"/>
                     </group>
 
-
                     <!-- Campos calculados -->
                     <group>
                         <field name="inscripciones_count" readonly="1"/>
                         <field name="numero_participantes" readonly="1"/>
                         <field name="ingresos_totales" readonly="1"/>
                     </group>
+
+                    <!-- Líneas de inscripción y partidas del torneo -->
+                    <notebook>
+                        <page string="Inscripciones">
+                            <field name="inscripcion_ids">
+                                <list>
+                                    <field name="participante_id"/>
+                                    <field name="fecha_inscripcion"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="dias_desde_inscripcion"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Partidas">
+                            <field name="partida_ids">
+                                <list>
+                                    <field name="fase"/>
+                                    <field name="fecha_hora_programada"/>
+                                    <field name="participante_local"/>
+                                    <field name="participante_visitante"/>
+                                    <field name="puntuacion_local"/>
+                                    <field name="puntuacion_visitante"/>
+                                    <field name="ganador_id"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'playing'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Clasificación">
+                            <field name="standing_ids">
+                                <list>
+                                    <field name="posicion_final"/>
+                                    <field name="participante_id"/>
+                                    <field name="partidas_jugadas"/>
+                                    <field name="partidas_ganadas"/>
+                                    <field name="partidas_perdidas"/>
+                                    <field name="puntos_acumulados"/>
+                                    <field name="premio_obtenido"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

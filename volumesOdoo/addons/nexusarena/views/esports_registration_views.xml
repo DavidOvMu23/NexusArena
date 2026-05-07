@@ -58,6 +58,7 @@
                 <!-- Botones de acción en el encabezado -->
                 <header>
                     <button name="action_confirm_registration" type="object" string="Confirmar inscripción" class="oe_highlight" invisible="state != 'pending'"/> <!-- El botón solo se muestra si el estado es 'pending' -->
+                    <field name="state" widget="statusbar" statusbar_visible="pending,confirmed,disqualified"/> <!-- barra de progreso de estados visible en el encabezado -->
                 </header>
                 <sheet>
                     <group>
@@ -67,10 +68,6 @@
                         </group>
                         <group>
                             <field name="fecha_inscripcion"/>
-                            <field name="state" widget="statusbar" statusbar_visible="pending,confirmed,disqualified"/> <!-- hacemos que el statusbar sea visible haciendo visible en todos los estados -->
-
-
-
                             <!-- Campos calculados -->
                             <field name="dias_desde_inscripcion" readonly="1"/>
                         </group>

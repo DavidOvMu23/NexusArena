@@ -90,6 +90,14 @@ class EsportsMatch(models.Model):
 
 
 	# ----- Métodos de acción -----
+	def action_start_match(self):
+		for rec in self:
+			if rec.state != 'scheduled':
+				raise UserError('Solo se puede iniciar una partida que esté programada.')
+			if rec.torneo_id.state != 'ongoing':
+				raise UserError('El torneo debe estar en curso para iniciar una partida.')
+			rec.state = 'playing'
+
 	# El método action_register_result se encarga de registrar el resultado de la partida, marcándola como finalizada,
 	# determinando el ganador en función de las puntuaciones, asegurando que exista un standing para cada participante 
 	# y añadiendo la partida a su lista de partidas jugadas, y publicando

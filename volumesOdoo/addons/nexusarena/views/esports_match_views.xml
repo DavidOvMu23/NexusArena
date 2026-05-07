@@ -31,14 +31,15 @@
 
                 <!-- Botones de acción en el encabezado -->
                 <header>
-                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight" invisible="state in ('finished', 'walkover')"/> <!-- El botón solo se muestra si la partida no está finalizada ni es walkover -->
+                    <button name="action_start_match" type="object" string="Iniciar partida" class="oe_highlight" invisible="state != 'scheduled'"/>
+                    <button name="action_register_result" type="object" string="Registrar resultado" class="oe_highlight" invisible="state in ('finished', 'walkover')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="scheduled,playing,finished,walkover"/> <!-- barra de progreso de estados visible en el encabezado -->
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="torneo_id"/>
                             <field name="fase"/>
-                            <field name="state" widget="statusbar" statusbar_visible="scheduled,playing,finished,walkover"/> <!-- Mostramos el estado como una barra de estado con los estados visibles -->
                             <field name="fecha_hora_programada"/>
                         </group>
                         <group>

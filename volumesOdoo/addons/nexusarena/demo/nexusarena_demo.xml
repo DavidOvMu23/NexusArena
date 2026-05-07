@@ -268,6 +268,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_3">200</field>
             <field name="cuota_inscripcion">10</field>
             <field name="state">ongoing</field>
+            <field name="es_publico">True</field>
             <field name="videojuego_id" ref="game_03_eafc25"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_13_ace'), ref('participant_14_rush'), ref('participant_15_lumen')])]"/>
         </record>
@@ -284,6 +285,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="premio_3">300</field>
             <field name="cuota_inscripcion">15</field>
             <field name="state">open</field>
+            <field name="es_publico">True</field>
             <field name="videojuego_id" ref="game_05_fortnite"/>
             <field name="participante_ids" eval="[(6, 0, [ref('participant_16_vox'), ref('participant_17_pulse'), ref('participant_18_drift'), ref('participant_19_quark')])]"/>
         </record>
@@ -563,6 +565,7 @@ la base de datos le des al checkbox de "Cargar datos demo" -->
             <field name="partida_final_id" ref="match_06"/>
             <field name="posicion_final">4</field>
         </record>
+
 
     </data>
 </odoo>

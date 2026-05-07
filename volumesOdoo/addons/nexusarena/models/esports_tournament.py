@@ -198,11 +198,11 @@ class EsportsTournament(models.Model):
                 raise UserError('El torneo está cancelado y no permite notificaciones.')
             if not rec.participante_ids:
                 raise UserError('No hay participantes para notificar en este torneo.')
-            msg = body or ('Notificación del torneo %s (estado: %s)' % (rec.nombre or '', rec.state or ''))
-            
-            # Enviamos un mensaje a cada participante (esto crea mail.message y notifica al partner)
-            for partner in rec.participante_ids:
-                try:
-                    partner.message_post(body=msg, subject=subject)
-                except Exception:
-                    continue
+            msg = body or ('Notificación del torneo <b>%s</b> (estado: %s)' % (rec.nombre or '', rec.state or ''))
+
+            # message_notify manda la notificación a la bandeja de entrada de cada participante
+            rec.message_notify(
+                partner_ids=rec.participante_ids.ids,
+                subject=subject,
+                body=msg,
+            )
