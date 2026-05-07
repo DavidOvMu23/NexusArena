@@ -88,12 +88,16 @@ class EsportsRegistration(models.Model):
 
 
     # ----- Validaciones -----
+    # aqui comprobamos que el torneo al que se está inscribiendo el participante no esté en estado 'ongoing', 'done' o 'cancel', 
+    # lo que impediría crear inscripciones para torneos que ya han comenzado, finalizado o están cancelados.
     @api.constrains('torneo_id')
     def _check_torneo_state(self):
         for rec in self:
             if rec.torneo_id and rec.torneo_id.state in ('ongoing', 'done', 'cancel'):
                 raise UserError('No se pueden crear inscripciones en un torneo que ya ha iniciado, finalizado o está cancelado.')
 
+    #aqui se asegura de que no haya inscripciones duplicadas para el mismo participante en el mismo torneo, 
+    # lo que garantiza la integridad de los datos y evita que un participante se inscriba varias veces en el mismo torneo.
     @api.constrains('torneo_id', 'participante_id')
     def _check_unique_registration(self):
         for rec in self:

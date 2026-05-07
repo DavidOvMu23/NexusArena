@@ -48,13 +48,15 @@ class EsportsStanding(models.Model):
     puntos_acumulados = fields.Integer(string='Puntos acumulados', compute='_compute_stats', store=True)
     premio_obtenido = fields.Float(string='Premio obtenido', compute='_compute_premio', store=True)
 
+    # este método se ejecuta cada vez que se cambia el torneo_id en el formulario de clasificación.
+    # para actualizar el dominio del campo participante_id y mostrar solo los participantes inscritos en el torneo seleccionado.
     @api.onchange('torneo_id')
     def _onchange_torneo_id(self):
         domain = [('id', 'in', self.torneo_id.participante_ids.ids)] if self.torneo_id else []
         return {'domain': {'participante_id': domain}}
 
+    #este método se encarga de calcular las estadísticas de partidas jugadas, ganadas, perdidas y puntos acumulados para cada clasificación.
     @api.depends('partida_ids.ganador_id', 'partida_ids.state')
-    # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
     def _compute_stats(self):
         for rec in self:
             # rec es para referirnos a cada registro individual dentro del modelo.
@@ -82,12 +84,18 @@ class EsportsStanding(models.Model):
 
 
     # ----- Restricciones -----
+    #este método se encarga de validar que el torneo asociado a la clasificación esté en estado 'ongoing' o 'done',
+    # lo que significa que el torneo debe estar en curso o finalizado para poder crear o modificar una clasificación. 
+    # Si el torneo está en otro estado, se lanza un error
     @api.constrains('torneo_id')
     def _check_torneo_ongoing(self):
         for rec in self:
             if rec.torneo_id and rec.torneo_id.state not in ('ongoing', 'done'):
                 raise UserError('Solo se pueden crear clasificaciones en un torneo en curso.')
 
+    # este método se encarga de validar que no haya más de una clasificación para el mismo participante en el mismo torneo.
+    # Si se intenta crear o modificar una clasificación con un participante que ya tiene una clasificación en el mismo torneo, 
+    #se lanza un error indicando que el participante ya tiene una clasificación en ese torneo.
     @api.constrains('torneo_id', 'participante_id')
     def _check_unique_participant_standing(self):
         for rec in self:
@@ -104,6 +112,7 @@ class EsportsStanding(models.Model):
                     % rec.participante_id.name
                 )
 
+    # este método se encarga de validar que la posición final sea un número entero positivo.
     @api.constrains('posicion_final')
     def _check_positive_position(self):
         for rec in self:

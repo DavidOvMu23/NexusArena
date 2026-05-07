@@ -32,6 +32,7 @@
         <field name="name">Participante: Solo torneos públicos</field>
         <field name="model_id" ref="model_esports_tournament"/>
         <field name="groups" eval="[(4, ref('group_tourney_participant'))]"/>
+        <!-- aqui establecemos que el torneo sea público o que el usuario sea participante para que pueda verlo -->
         <field name="domain_force">['|', '&amp;', ('es_publico', '=', True), ('state', '=', 'open'), '&amp;', ('state', 'in', ['open', 'ongoing', 'done']), ('inscripcion_ids.participante_id', '=', user.partner_id.id)]</field>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>

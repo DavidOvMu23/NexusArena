@@ -70,16 +70,15 @@ class EsportsTournament(models.Model):
     numero_participantes = fields.Integer(string='Número de participantes', compute='_compute_statistics', store=True)
     ingresos_totales = fields.Float(string='Ingresos totales', compute='_compute_statistics', store=True)
 
+    # Este metodo es para calcular el premio total sumando los premios individuales de los tres primeros puestos.
     @api.depends('premio_1', 'premio_2', 'premio_3')
     def _compute_premio_total(self):
         for rec in self:
             rec.premio_total = (rec.premio_1 or 0.0) + (rec.premio_2 or 0.0) + (rec.premio_3 or 0.0)
 
-    # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
+    #en este campo calculado se calculan varias estadísticas del torneo, como el número de inscripciones, 
+    #el número de partidas, el número de participantes confirmados y los ingresos totales por inscripciones.
     @api.depends('inscripcion_ids.state', 'partida_ids', 'cuota_inscripcion')
-
-    #en este campo calculado es contar el número de líneas de inscripción, partidas, participantes confirmados 
-    #y calcular los ingresos totales en función de la cuota de inscripción y el número de participantes confirmados.
     def _compute_statistics(self):
         for rec in self:
             # rec es para referirnos a cada registro individual dentro del modelo.
@@ -107,6 +106,7 @@ class EsportsTournament(models.Model):
         return super(EsportsTournament, self).write(vals)
 
     def unlink(self):
+        # Bloquear eliminación de torneos finalizados o con inscripciones confirmadas para usuarios no administradores
         for rec in self:
             if rec.state == 'done' and not self.env.user.has_group('nexusarena.group_tourney_admin'):
                 raise UserError('El torneo está finalizado y no puede ser eliminado.')
@@ -118,12 +118,9 @@ class EsportsTournament(models.Model):
                 )
         return super(EsportsTournament, self).unlink()
 
-
-
-
-
-    # ----- Validaciones -----
     @api.constrains('state', 'inscripcion_ids.state')
+    # Esta restricción se asegura de que un torneo en estado "ongoing" tenga al menos 2 participantes confirmados.
+    # Si no se cumple esta condición, se lanza un error de usuario.
     def _check_min_confirmed_for_ongoing(self):
         for rec in self:
             if rec.state != 'ongoing':

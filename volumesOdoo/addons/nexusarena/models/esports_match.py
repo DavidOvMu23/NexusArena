@@ -50,6 +50,9 @@ class EsportsMatch(models.Model):
 
 
 	# ----- Campos calculados -----
+	# aqui comprobamos que el torneo seleccionado en la partida tenga como participantes a los participantes local y visitante,
+	# y si no es así, se devuelve un dominio vacío para ambos campos de participante, 
+	# lo que obliga al usuario a seleccionar participantes válidos dentro del torneo seleccionado.
 	@api.onchange('torneo_id')
 	def _onchange_torneo_id(self):
 		domain = [('id', 'in', self.torneo_id.participante_ids.ids)] if self.torneo_id else []
@@ -75,12 +78,14 @@ class EsportsMatch(models.Model):
 
 
 		# ----- Restricciones -----
+		# La restricción _check_torneo_ongoing asegura que solo se puedan crear partidas asociadas a torneos que estén en estado 'ongoing' o 'done'.
 	@api.constrains('torneo_id')
 	def _check_torneo_ongoing(self):
 		for rec in self:
 			if rec.torneo_id and rec.torneo_id.state not in ('ongoing', 'done'):
 				raise UserError('Solo se pueden crear partidas en un torneo en curso.')
 
+		# La restricción _check_different_participants asegura que el participante local y el visitante no sean el mismo para una partida.
 	@api.constrains('participante_local', 'participante_visitante')
 	def _check_different_participants(self):
 		for rec in self:
@@ -88,6 +93,7 @@ class EsportsMatch(models.Model):
 				if rec.participante_local == rec.participante_visitante:
 					raise UserError('El participante local y el visitante no pueden ser el mismo.')
 
+		# La restricción _check_unique_participant_per_phase asegura que un participante no pueda estar en múltiples partidas en la misma fase.
 	@api.constrains('torneo_id', 'fase', 'participante_local', 'participante_visitante')
 	def _check_unique_participant_per_phase(self):
 		for rec in self:
@@ -110,6 +116,7 @@ class EsportsMatch(models.Model):
 						% (participante.name, dict(self._fields['fase'].selection).get(rec.fase, rec.fase))
 					)
 
+	# La restricción _check_non_negative_scores asegura que las puntuaciones locales y visitantes no sean negativas.
 	@api.constrains('puntuacion_local', 'puntuacion_visitante')
 	def _check_non_negative_scores(self):
 		for rec in self:
@@ -122,6 +129,7 @@ class EsportsMatch(models.Model):
 
 
 	# ----- Métodos de acción -----
+	# El método action_start_match se encarga de iniciar la partida, cambiando su estado a 'playing' solo si la partida está programada y el torneo asociado está en curso.
 	def action_start_match(self):
 		for rec in self:
 			if rec.state != 'scheduled':
