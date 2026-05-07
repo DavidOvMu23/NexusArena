@@ -1,32 +1,47 @@
 FUNCIONALIDADES EXTRA — Decisiones propias que mejoran el módulo
 
 1. Visibilidad de torneos para el participante (regla de registro ampliada)
-   El enunciado dice que el participante "solo puede ver los torneos públicos".
-   Lo he interpretado de forma más restrictiva y lógica: el participante solo ve
-   los torneos con inscripciones abiertas (donde puede apuntarse) y los torneos
-   en curso en los que él mismo está inscrito (para seguir su progreso). Los
-   torneos finalizados, cancelados o en borrador no le son de utilidad y no los ve.
+    El enunciado dice que el participante "solo puede ver los torneos públicos".
+    Lo he interpretado de forma más restrictiva y lógica: el participante solo ve
+    los torneos con inscripciones abiertas (donde puede apuntarse) y los torneos
+    en curso en los que él mismo está inscrito (para seguir su progreso). Los
+    torneos finalizados, cancelados o en borrador no le son de utilidad y no los ve.
+
+    Adicionalmente, se ha ampliado la regla para que un participante pueda ver un
+    torneo PRIVADO si ya está inscrito en él, independientemente de si el torneo
+    está en estado "Inscripciones Abiertas", "En Curso" o "Finalizado".
+    De esta forma, si un organizador crea un torneo privado e inscribe manualmente
+    a un jugador, dicho jugador puede acceder al torneo sin necesitar que sea público.
 
 2. Notificaciones internas de Odoo (bandeja de entrada de Discuss)
-   El enunciado pide un botón "Notificar participantes" que use mail.message, lo
-   que se cumple publicando el mensaje en el chatter del torneo. De forma adicional,
-   el botón también envía la notificación directamente a la bandeja de entrada
-   personal (Discuss) de cada participante inscrito que tenga cuenta de usuario en
-   Odoo, de forma que le llegue un aviso sin necesidad de que entre al torneo.
+    El enunciado pide un botón "Notificar participantes" que use mail.message, lo
+    que se cumple publicando el mensaje en el chatter del torneo (eso es obligatorio).
+    Como extra, el botón también envía la notificación directamente a la bandeja de
+    entrada personal (Discuss) de cada participante inscrito que tenga cuenta de
+    usuario en Odoo, de forma que le llegue un aviso sin necesidad de que entre al
+    torneo.
 
 3. Botón "Cancelar torneo"
-   El enunciado solo pide tres botones de transición de estado. Se ha añadido un
-   botón de cancelación con diálogo de confirmación para gestionar torneos que no
-   llegan a celebrarse, bloqueando además su edición posterior igual que los finalizados.
+    El enunciado solo pide tres botones de transición de estado (Abrir inscripciones,
+    Iniciar torneo, Finalizar torneo). Se ha añadido un botón de cancelación con
+    diálogo de confirmación para gestionar torneos que no llegan a celebrarse,
+    bloqueando además su edición posterior igual que los finalizados.
 
 4. Botón "Iniciar partida"
-   El enunciado lista "en juego" como estado de una partida pero no exige botón
-   para activarlo. Se ha añadido para hacer la transición programada → en juego de
-   forma explícita, lo que permite mostrar correctamente el color verde en la lista
-   cuando una partida está activa.
+    El enunciado lista "en juego" como estado de una partida pero no exige botón
+    para activarlo. Se ha añadido para hacer la transición programada → en juego de
+    forma explícita, lo que permite mostrar correctamente el color verde en la lista
+    cuando una partida está activa.
 
-5. Pestañas de Partidas y Clasificación en el formulario del torneo
-   El enunciado no especifica cómo mostrar las líneas relacionadas del torneo.
-   Se han añadido como pestañas (notebook) para que desde el propio torneo se puedan
-   consultar sus inscripciones, partidas y clasificación sin tener que navegar a
-   otro menú.
+5. Enlace a la factura de cuota desde la inscripción
+    Al confirmar una inscripción se genera automáticamente una factura de venta (eso
+    lo pide el enunciado). Como extra, se ha añadido un campo Many2one (factura_id)
+    en el modelo de inscripción que guarda la referencia a dicha factura, y se muestra
+    en el formulario como enlace clicable para navegar directamente a ella. El campo
+    solo aparece cuando la factura existe.
+
+6. Fórmula de puntos acumulados (sistema 3-1-0)
+    El campo "Puntos acumulados" en esports.standing se calcula con el sistema
+    estándar de fútbol: 3 puntos por victoria, 1 por empate y 0 por derrota.
+    El enunciado pide el campo "puntos acumulados" pero no especifica ninguna fórmula;
+    la implementación de este sistema es una decisión propia.

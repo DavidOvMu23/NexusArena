@@ -92,7 +92,6 @@
                     </group>
                     <group>
                         <field name="cuota_inscripcion"/>
-                        <field name="premio_total"/>
                         <field name="premio_1"/>
                         <field name="premio_2"/>
                         <field name="premio_3"/>
@@ -100,6 +99,7 @@
 
                     <!-- Campos calculados -->
                     <group>
+                        <field name="premio_total" readonly="1"/>
                         <field name="inscripciones_count" readonly="1"/>
                         <field name="numero_participantes" readonly="1"/>
                         <field name="ingresos_totales" readonly="1"/>

@@ -45,19 +45,16 @@ class EsportsMatch(models.Model):
 		'standing_id',
 		string='Clasificaciones donde computa',
 	)
-	arbitro_ids = fields.Many2many(
-		'res.partner',
-		'esports_match_referee_rel',
-		'match_id',
-		'partner_id',
-		string='Árbitros',
-	)
-
 
 
 
 
 	# ----- Campos calculados -----
+	@api.onchange('torneo_id')
+	def _onchange_torneo_id(self):
+		domain = [('id', 'in', self.torneo_id.participante_ids.ids)] if self.torneo_id else []
+		return {'domain': {'participante_local': domain, 'participante_visitante': domain}}
+
 	# El método _compute_ganador calcula el ganador de la partida en función de las puntuaciones locales y visitantes.
 	# Si alguna de las puntuaciones es None, el ganador se establece como False. 
 	#Si la puntuación local es mayor que la visitante, el ganador es el participante local; si la puntuación visitante es mayor, 
@@ -78,6 +75,41 @@ class EsportsMatch(models.Model):
 
 
 		# ----- Restricciones -----
+	@api.constrains('torneo_id')
+	def _check_torneo_ongoing(self):
+		for rec in self:
+			if rec.torneo_id and rec.torneo_id.state not in ('ongoing', 'done'):
+				raise UserError('Solo se pueden crear partidas en un torneo en curso.')
+
+	@api.constrains('participante_local', 'participante_visitante')
+	def _check_different_participants(self):
+		for rec in self:
+			if rec.participante_local and rec.participante_visitante:
+				if rec.participante_local == rec.participante_visitante:
+					raise UserError('El participante local y el visitante no pueden ser el mismo.')
+
+	@api.constrains('torneo_id', 'fase', 'participante_local', 'participante_visitante')
+	def _check_unique_participant_per_phase(self):
+		for rec in self:
+			if not rec.torneo_id or not rec.fase:
+				continue
+			for participante in [rec.participante_local, rec.participante_visitante]:
+				if not participante:
+					continue
+				duplicate = self.search([
+					('id', '!=', rec.id),
+					('torneo_id', '=', rec.torneo_id.id),
+					('fase', '=', rec.fase),
+					'|',
+					('participante_local', '=', participante.id),
+					('participante_visitante', '=', participante.id),
+				], limit=1)
+				if duplicate:
+					raise UserError(
+						'El participante "%s" ya tiene una partida en la fase "%s" de este torneo.'
+						% (participante.name, dict(self._fields['fase'].selection).get(rec.fase, rec.fase))
+					)
+
 	@api.constrains('puntuacion_local', 'puntuacion_visitante')
 	def _check_non_negative_scores(self):
 		for rec in self:
@@ -131,16 +163,6 @@ class EsportsMatch(models.Model):
 
 			# Marcamos la partida como finalizada; el campo ganador se calcula automáticamente
 			rec.state = 'finished'
-
-			# Aseguramos que exista un standing por participante y añadimos la partida a su lista
-			Standing = self.env['esports.standing']
-			for participant in (rec.participante_local, rec.participante_visitante):
-				if not participant:
-					continue
-				st = Standing.search([('torneo_id', '=', rec.torneo_id.id), ('participante_id', '=', participant.id)], limit=1)
-				if not st:
-					st = Standing.create({'torneo_id': rec.torneo_id.id, 'participante_id': participant.id})
-				st.write({'partida_ids': [(4, rec.id)]})
 
 			# Mensaje en el hilo del torneo
 			rec.torneo_id.message_post(body='Resultado registrado para la partida %s' % (rec.id,))

@@ -32,7 +32,7 @@
                             <field name="name"/>
                             <field name="nick"/>
                             <field name="tipo_jugador"/>
-                            <field name="equipo_id" invisible="tipo_jugador != 'jugador'"/> <!-- El campo equipo_id solo se muestra si el tipo de jugador es 'jugador' -->
+                            <field name="equipo_id" invisible="tipo_jugador != 'jugador'"/>
                             <field name="experiencia"/>
                         </group>
                         <group>
@@ -40,7 +40,8 @@
                             <field name="plataforma"/>
                             <field name="email"/>
                             <field name="phone"/>
-                            <field name="jugador_ids" invisible="tipo_jugador != 'equipo'"/> <!-- El campo jugador_ids solo se muestra si el tipo de jugador es 'equipo' -->
+                            <field name="jugador_ids" invisible="tipo_jugador != 'equipo'"
+                                domain="[('tipo_jugador', '=', 'jugador')]"/> <!-- Solo se muestra para equipos; el dominio filtra solo jugadores individuales -->
                         </group>
                     </group>
                 </sheet>

@@ -48,7 +48,11 @@ class EsportsStanding(models.Model):
     puntos_acumulados = fields.Integer(string='Puntos acumulados', compute='_compute_stats', store=True)
     premio_obtenido = fields.Float(string='Premio obtenido', compute='_compute_premio', store=True)
 
-    # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
+    @api.onchange('torneo_id')
+    def _onchange_torneo_id(self):
+        domain = [('id', 'in', self.torneo_id.participante_ids.ids)] if self.torneo_id else []
+        return {'domain': {'participante_id': domain}}
+
     @api.depends('partida_ids.ganador_id', 'partida_ids.state')
     # self es para referirnos al modelo actual a la hora de calcular el valor de los campos calculados.
     def _compute_stats(self):
@@ -78,6 +82,28 @@ class EsportsStanding(models.Model):
 
 
     # ----- Restricciones -----
+    @api.constrains('torneo_id')
+    def _check_torneo_ongoing(self):
+        for rec in self:
+            if rec.torneo_id and rec.torneo_id.state not in ('ongoing', 'done'):
+                raise UserError('Solo se pueden crear clasificaciones en un torneo en curso.')
+
+    @api.constrains('torneo_id', 'participante_id')
+    def _check_unique_participant_standing(self):
+        for rec in self:
+            if not rec.torneo_id or not rec.participante_id:
+                continue
+            duplicate = self.search([
+                ('id', '!=', rec.id),
+                ('torneo_id', '=', rec.torneo_id.id),
+                ('participante_id', '=', rec.participante_id.id),
+            ], limit=1)
+            if duplicate:
+                raise UserError(
+                    'El participante "%s" ya tiene una clasificación en este torneo.'
+                    % rec.participante_id.name
+                )
+
     @api.constrains('posicion_final')
     def _check_positive_position(self):
         for rec in self:

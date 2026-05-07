@@ -13,6 +13,7 @@
                 <field name="modalidad"/>
                 <field name="desarrollador"/>
                 <field name="max_jugadores_equipo"/>
+                <field name="torneos_activos_count"/>
             </list>
         </field>
     </record>
@@ -33,6 +34,7 @@
                         <group>
                             <field name="desarrollador"/>
                             <field name="max_jugadores_equipo"/>
+                            <field name="torneos_activos_count" readonly="1"/>
                             <field name="imagen" widget="image" class="oe_avatar"/>
                         </group>
                     </group>

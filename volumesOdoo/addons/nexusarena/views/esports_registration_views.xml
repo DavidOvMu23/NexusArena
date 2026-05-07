@@ -70,6 +70,7 @@
                             <field name="fecha_inscripcion"/>
                             <!-- Campos calculados -->
                             <field name="dias_desde_inscripcion" readonly="1"/>
+                            <field name="factura_id" readonly="1" invisible="not factura_id" widget="many2one"/>
                         </group>
                     </group>
                 </sheet>

@@ -23,9 +23,10 @@ class EsportsRegistration(models.Model):
 
 
     # ----- Relaciones -----
-    torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True)
+    torneo_id = fields.Many2one('esports.tournament', string="Torneo", required=True, ondelete='cascade')
     participante_id = fields.Many2one('res.partner', string="Participante", required=True)
     standing_ids = fields.One2many('esports.standing', 'inscripcion_id', string='Clasificación asociada')
+    factura_id = fields.Many2one('account.move', string='Factura de Inscripción', readonly=True)
     miembro_ids = fields.Many2many(
         'res.partner',
         'esports_registration_member_rel',
@@ -69,6 +70,10 @@ class EsportsRegistration(models.Model):
         for vals in vals_list:
             torneo_id = vals.get('torneo_id')
             participante_id = vals.get('participante_id')
+            if torneo_id:
+                torneo = self.env['esports.tournament'].browse(torneo_id)
+                if torneo.state in ('ongoing', 'done', 'cancel'):
+                    raise UserError('No se pueden crear inscripciones en un torneo que ya ha iniciado, finalizado o está cancelado.')
             if torneo_id and participante_id:
                 exists = self.search([
                     ('torneo_id', '=', torneo_id),
@@ -83,6 +88,12 @@ class EsportsRegistration(models.Model):
 
 
     # ----- Validaciones -----
+    @api.constrains('torneo_id')
+    def _check_torneo_state(self):
+        for rec in self:
+            if rec.torneo_id and rec.torneo_id.state in ('ongoing', 'done', 'cancel'):
+                raise UserError('No se pueden crear inscripciones en un torneo que ya ha iniciado, finalizado o está cancelado.')
+
     @api.constrains('torneo_id', 'participante_id')
     def _check_unique_registration(self):
         for rec in self:
@@ -160,8 +171,9 @@ class EsportsRegistration(models.Model):
         # y la factura es una consecuencia automática del proceso, no una acción contable manual.
         invoice = self.env['account.move'].sudo().create(move_vals)
 
-        # Marcar como confirmada y añadir participante al torneo
+        # Marcar como confirmada, vincular factura y añadir participante al torneo
         self.state = 'confirmed'
+        self.factura_id = invoice.id
         if self.participante_id and tournament:
             tournament.write({'participante_ids': [(4, self.participante_id.id)]})
 

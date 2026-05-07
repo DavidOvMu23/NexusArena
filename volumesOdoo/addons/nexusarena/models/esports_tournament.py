@@ -27,10 +27,10 @@ class EsportsTournament(models.Model):
     fecha_inicio = fields.Date(string="Fecha de Inicio")
     fecha_fin = fields.Date(string="Fecha de Fin")
     es_publico = fields.Boolean(string='Torneo público', default=False)
-    premio_total = fields.Float(string="Premio Total (€)")
     premio_1 = fields.Float(string="1er Puesto (€)")
     premio_2 = fields.Float(string="2º Puesto (€)")
     premio_3 = fields.Float(string="3er Puesto (€)")
+    premio_total = fields.Float(string="Premio Total (€)", compute='_compute_premio_total', store=True)
     cuota_inscripcion = fields.Float(string="Cuota de Inscripción")
     # state del torneo.
     state = fields.Selection([
@@ -70,6 +70,11 @@ class EsportsTournament(models.Model):
     numero_participantes = fields.Integer(string='Número de participantes', compute='_compute_statistics', store=True)
     ingresos_totales = fields.Float(string='Ingresos totales', compute='_compute_statistics', store=True)
 
+    @api.depends('premio_1', 'premio_2', 'premio_3')
+    def _compute_premio_total(self):
+        for rec in self:
+            rec.premio_total = (rec.premio_1 or 0.0) + (rec.premio_2 or 0.0) + (rec.premio_3 or 0.0)
+
     # api.depends es para indicar que el valor de este campo se calcula a partir de otros campos y ahi debemos de indicar que campos son esos
     @api.depends('inscripcion_ids.state', 'partida_ids', 'cuota_inscripcion')
 
@@ -102,10 +107,15 @@ class EsportsTournament(models.Model):
         return super(EsportsTournament, self).write(vals)
 
     def unlink(self):
-        # Bloquear eliminación de torneos finalizados para usuarios no administradores
         for rec in self:
             if rec.state == 'done' and not self.env.user.has_group('nexusarena.group_tourney_admin'):
                 raise UserError('El torneo está finalizado y no puede ser eliminado.')
+            confirmed = rec.inscripcion_ids.filtered(lambda i: i.state == 'confirmed')
+            if confirmed:
+                raise UserError(
+                    'No se puede eliminar el torneo "%s" porque tiene %d inscripción(es) confirmada(s).'
+                    % (rec.nombre, len(confirmed))
+                )
         return super(EsportsTournament, self).unlink()
 
 
