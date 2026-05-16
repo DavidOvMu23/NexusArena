@@ -47,7 +47,7 @@
                             <field name="participante_visitante"/>
                             <field name="puntuacion_local" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación local sea solo lectura si la partida está finalizada o es walkover -->
                             <field name="puntuacion_visitante" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de puntuación visitante sea solo lectura si la partida está finalizada o es walkover -->
-                            <field name="resultado" readonly="state in ('finished', 'walkover')"/> <!-- Hacemos que el campo de resultado sea solo lectura si la partida está finalizada o es walkover -->
+                            <field name="resultado"/> <!-- Marcador calculado "X - Y" a partir de las puntuaciones (solo lectura por ser compute) -->
 
 
 

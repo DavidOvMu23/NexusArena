@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de formulario del wizard de generación de bracket. -->
+    <record id="view_esports_bracket_wizard_form" model="ir.ui.view">
+        <field name="name">esports.bracket.wizard.form</field>
+        <field name="model">esports.bracket.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generar bracket de eliminatorias">
+                <sheet>
+                    <group>
+                        <field name="torneo_id" readonly="1"/>
+                        <field name="numero_participantes" readonly="1"/>
+                    </group>
+
+                    <!-- Lista (solo lectura) con los participantes confirmados que entrarán al bracket. -->
+                    <group string="Participantes confirmados (orden por seed)">
+                        <field name="participantes_confirmados_ids" nolabel="1" readonly="1">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <!-- Opciones de generación del bracket -->
+                    <group string="Opciones">
+                        <field name="modo_emparejamiento"/>
+                        <field name="fecha_inicio_partidas"/>
+                        <field name="incluir_tercer_puesto"/>
+                        <field name="limpiar_partidas_existentes"/>
+                    </group>
+
+                    <!-- Vista previa de la estructura del bracket -->
+                    <group string="Estructura propuesta">
+                        <field name="info_bracket" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate_bracket" type="object"
+                            string="Generar bracket"
+                            class="btn-primary"
+                            confirm="¿Generar el bracket? Si has marcado limpiar partidas, se eliminarán las partidas no finalizadas existentes."/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el wizard. Se invoca desde el botón "Generar bracket"
+         del formulario de torneo, que pasa el torneo activo por contexto. -->
+    <record id="action_esports_bracket_wizard" model="ir.actions.act_window">
+        <field name="name">Generar bracket de eliminatorias</field>
+        <field name="res_model">esports.bracket.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_esports_bracket_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

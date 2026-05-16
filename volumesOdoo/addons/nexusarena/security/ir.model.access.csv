@@ -17,3 +17,6 @@ access_esports_tournament_participant,esports.tournament participant,model_espor
 access_esports_registration_participant,esports.registration participant,model_esports_registration,group_tourney_participant,1,0,0,0
 access_esports_standing_participant,esports.standing participant,model_esports_standing,group_tourney_participant,1,0,0,0
 access_esports_game_participant,esports.game participant,model_esports_game,group_tourney_participant,1,0,0,0
+
+access_esports_bracket_wizard_admin,esports.bracket.wizard admin,model_esports_bracket_wizard,group_tourney_admin,1,1,1,1
+access_esports_bracket_wizard_organizer,esports.bracket.wizard organizer,model_esports_bracket_wizard,group_tourney_organizer,1,1,1,1
