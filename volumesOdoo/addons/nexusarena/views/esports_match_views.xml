@@ -60,6 +60,25 @@
         </field>
     </record>
 
+    <!-- Vista de calendario para visualizar el calendario del torneo. -->
+    <record id="view_esports_match_calendar" model="ir.ui.view">
+        <field name="name">esports.match.calendar</field>
+        <field name="model">esports.match</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendario de partidas"
+                      date_start="fecha_hora_programada"
+                      mode="month"
+                      color="torneo_id"
+                      quick_create="0">
+                <field name="torneo_id" filters="1"/>
+                <field name="fase" filters="1"/>
+                <field name="participante_local"/>
+                <field name="participante_visitante"/>
+                <field name="state" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+
     <!-- Vista de búsqueda con filtros por state de la partida. -->
     <record id="view_esports_match_search" model="ir.ui.view">
         <field name="name">esports.match.search</field>
@@ -83,7 +102,7 @@
     <record id="action_esports_match" model="ir.actions.act_window"> <!-- ir.actions.act_window indica a odoo que lo que estamos haciendo es una acción de ventana-->
         <field name="name">Partidas</field> <!--nombre de la acción que aparecerá en el menú-->
         <field name="res_model">esports.match</field> <!--indicamos el modelo al que se aplicará la acción-->
-        <field name="view_mode">list,form</field> <!--indicamos los modos de vista disponibles-->
+        <field name="view_mode">list,calendar,form</field> <!--indicamos los modos de vista disponibles, incluyendo calendario-->
         <field name="search_view_id" ref="view_esports_match_search"/> <!--referenciamos la vista de búsqueda personalizada para partidas-->
     </record>
 
@@ -94,8 +113,15 @@
         <field name="act_window_id" ref="action_esports_match"/>
     </record>
 
-    <record id="action_esports_match_form_view" model="ir.actions.act_window.view">
+    <record id="action_esports_match_calendar_view" model="ir.actions.act_window.view">
         <field name="sequence" eval="2"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_esports_match_calendar"/>
+        <field name="act_window_id" ref="action_esports_match"/>
+    </record>
+
+    <record id="action_esports_match_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_esports_match_form"/>
         <field name="act_window_id" ref="action_esports_match"/>
