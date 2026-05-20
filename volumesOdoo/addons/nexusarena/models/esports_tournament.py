@@ -105,6 +105,8 @@ class EsportsTournament(models.Model):
                 raise UserError('El torneo está cancelado y no puede editarse.')
         return super(EsportsTournament, self).write(vals)
 
+    # Este método es para bloquear la eliminación de torneos que estén finalizados o que tengan inscripciones confirmadas, 
+    # a menos que el usuario tenga el grupo de administrador de torneos.
     def unlink(self):
         # Bloquear eliminación de torneos finalizados o con inscripciones confirmadas para usuarios no administradores
         for rec in self:

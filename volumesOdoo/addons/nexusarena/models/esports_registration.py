@@ -96,22 +96,6 @@ class EsportsRegistration(models.Model):
             if rec.torneo_id and rec.torneo_id.state in ('ongoing', 'done', 'cancel'):
                 raise UserError('No se pueden crear inscripciones en un torneo que ya ha iniciado, finalizado o está cancelado.')
 
-    #aqui se asegura de que no haya inscripciones duplicadas para el mismo participante en el mismo torneo, 
-    # lo que garantiza la integridad de los datos y evita que un participante se inscriba varias veces en el mismo torneo.
-    @api.constrains('torneo_id', 'participante_id')
-    def _check_unique_registration(self):
-        for rec in self:
-            if not rec.torneo_id or not rec.participante_id:
-                continue
-            duplicate = self.search([
-                ('id', '!=', rec.id),
-                ('torneo_id', '=', rec.torneo_id.id),
-                ('participante_id', '=', rec.participante_id.id),
-            ], limit=1)
-            if duplicate:
-                raise UserError('El participante ya está inscrito en este torneo.')
-
-
 
 
 

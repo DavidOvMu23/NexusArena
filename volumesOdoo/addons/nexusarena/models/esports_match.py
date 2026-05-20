@@ -52,6 +52,9 @@ class EsportsMatch(models.Model):
 		string='Clasificaciones donde computa',
 	)
 
+
+
+
 	# ----- Enlaces de bracket (los rellena el wizard de generación de bracket) -----
 	# Cuando una partida finaliza, su ganador se escribe automáticamente en el campo
 	# indicado de "siguiente_partida_id". Si la partida es una semifinal y existe
@@ -121,6 +124,11 @@ class EsportsMatch(models.Model):
 			else:
 				rec.resultado = '%s - %s' % (rec.puntuacion_local or 0, rec.puntuacion_visitante or 0)
 
+	# El campo ganador_id se calcula automáticamente en función de las puntuaciones locales y visitantes.
+	# Si alguna de las puntuaciones es None, el ganador se establece como False. 
+	#Si la puntuación local es mayor que la visitante, el ganador es el participante local; 
+	#si la puntuación visitante es mayor, el ganador es el participante visitante; si ambas puntuaciones son iguales, 
+	#el ganador se establece como False (empate).
 	@api.depends('puntuacion_local', 'puntuacion_visitante', 'participante_local', 'participante_visitante')
 	def _compute_ganador(self):
 		for rec in self:
@@ -257,6 +265,9 @@ class EsportsMatch(models.Model):
 						rec.siguiente_partida_id.fase, rec.siguiente_partida_id.fase))
 				)
 
+			# Propagación al 3er puesto para semifinales
+			# Solo si la partida tiene definido un enlace a la partida de 3er puesto y un slot para el perdedor. 
+			# Si no se ha definido el enlace o el slot, no se hace nada con el perdedor.
 			if loser and rec.partida_tercer_puesto_id and rec.tercer_puesto_slot:
 				slot_field = 'participante_local' if rec.tercer_puesto_slot == 'local' else 'participante_visitante'
 				rec.partida_tercer_puesto_id.write({slot_field: loser.id})
