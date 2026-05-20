@@ -110,7 +110,7 @@
                     <!-- Líneas de inscripción y partidas del torneo -->
                     <notebook>
                         <page string="Inscripciones">
-                            <field name="inscripcion_ids">
+                            <field name="inscripcion_ids" readonly="state != 'open'">
                                 <list>
                                     <field name="participante_id"/>
                                     <field name="fecha_inscripcion"/>

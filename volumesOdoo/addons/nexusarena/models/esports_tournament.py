@@ -120,7 +120,7 @@ class EsportsTournament(models.Model):
                 )
         return super(EsportsTournament, self).unlink()
 
-    @api.constrains('state', 'inscripcion_ids.state')
+    @api.constrains('state', 'inscripcion_ids')
     # Esta restricción se asegura de que un torneo en estado "ongoing" tenga al menos 2 participantes confirmados.
     # Si no se cumple esta condición, se lanza un error de usuario.
     def _check_min_confirmed_for_ongoing(self):

@@ -93,8 +93,21 @@ class EsportsRegistration(models.Model):
     @api.constrains('torneo_id')
     def _check_torneo_state(self):
         for rec in self:
-            if rec.torneo_id and rec.torneo_id.state in ('ongoing', 'done', 'cancel'):
+            if not rec.torneo_id:
+                continue
+            if rec.torneo_id.state == 'draft':
+                raise UserError('No se pueden crear inscripciones: primero abre las inscripciones del torneo con el botón "Abrir inscripciones".')
+            if rec.torneo_id.state in ('ongoing', 'done', 'cancel'):
                 raise UserError('No se pueden crear inscripciones en un torneo que ya ha iniciado, finalizado o está cancelado.')
+
+    # Cuando cambia el estado de una inscripción de un torneo ya "ongoing", revalidamos
+    # el mínimo de 2 confirmadas en el torneo (el @constrains del torneo no se dispara
+    # al cambiar el state de una inscripción existente).
+    @api.constrains('state')
+    def _check_torneo_min_confirmed(self):
+        for rec in self:
+            if rec.torneo_id:
+                rec.torneo_id._check_min_confirmed_for_ongoing()
 
 
 
