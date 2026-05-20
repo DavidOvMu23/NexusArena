@@ -131,6 +131,12 @@ class EsportsTournament(models.Model):
             if len(confirmed) < 2:
                 raise UserError('Un torneo en curso requiere al menos 2 participantes confirmados.')
 
+    @api.constrains('fecha_inicio', 'fecha_fin')
+    def _check_fechas(self):
+        for rec in self:
+            if rec.fecha_inicio and rec.fecha_fin and rec.fecha_fin < rec.fecha_inicio:
+                raise UserError('La fecha de fin del torneo no puede ser anterior a la fecha de inicio.')
+
 
 
 
