@@ -36,7 +36,7 @@
                             <field name="participante_id"/>
                         </group>
                         <group>
-                            <field name="posicion_final"/>
+                            <field name="posicion_final" readonly="1"/>
                             <field name="factura_id"/>
                         </group>
                     </group>

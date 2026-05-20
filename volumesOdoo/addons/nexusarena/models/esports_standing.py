@@ -12,7 +12,15 @@ class EsportsStanding(models.Model):
 
 
     # ----- Atributos -----
-    posicion_final = fields.Integer(string="Posición Final")
+    # La posición final se calcula automáticamente ordenando las clasificaciones
+    # del mismo torneo por puntos acumulados (desc), partidas ganadas (desc) y, en
+    # caso de empate total, por id de participante para mantener un orden estable.
+    posicion_final = fields.Integer(
+        string="Posición Final",
+        compute='_compute_posicion_final',
+        store=True,
+        readonly=True,
+    )
 
 
 
@@ -56,18 +64,67 @@ class EsportsStanding(models.Model):
         return {'domain': {'participante_id': domain}}
 
     #este método se encarga de calcular las estadísticas de partidas jugadas, ganadas, perdidas y puntos acumulados para cada clasificación.
-    @api.depends('partida_ids.ganador_id', 'partida_ids.state')
+    # Buscamos directamente las partidas finalizadas del torneo en las que participa
+    # el participante (como local o visitante), de modo que las estadísticas se
+    # actualizan automáticamente sin necesidad de mantener un M2M manual.
+    @api.depends(
+        'torneo_id',
+        'participante_id',
+        'torneo_id.partida_ids.state',
+        'torneo_id.partida_ids.ganador_id',
+        'torneo_id.partida_ids.participante_local',
+        'torneo_id.partida_ids.participante_visitante',
+    )
     def _compute_stats(self):
         for rec in self:
-            # rec es para referirnos a cada registro individual dentro del modelo.
-            finished = [m for m in rec.partida_ids if m.state == 'finished']
+            if not rec.torneo_id or not rec.participante_id:
+                rec.partidas_jugadas = 0
+                rec.partidas_ganadas = 0
+                rec.partidas_perdidas = 0
+                rec.puntos_acumulados = 0
+                continue
+            finished = rec.torneo_id.partida_ids.filtered(
+                lambda m: m.state == 'finished' and rec.participante_id.id in (
+                    m.participante_local.id,
+                    m.participante_visitante.id,
+                )
+            )
             rec.partidas_jugadas = len(finished)
-            rec.partidas_ganadas = sum(1 for m in finished if m.ganador_id and m.ganador_id.id == rec.participante_id.id)
+            rec.partidas_ganadas = sum(
+                1 for m in finished if m.ganador_id and m.ganador_id.id == rec.participante_id.id
+            )
             ties = sum(1 for m in finished if not m.ganador_id)
             rec.partidas_perdidas = rec.partidas_jugadas - rec.partidas_ganadas - ties
             rec.puntos_acumulados = rec.partidas_ganadas * 3 + ties
 
-    # El método _compute_premio calcula el premio obtenido por el participante en función de su posición 
+    # El método _compute_posicion_final asigna automáticamente la posición de cada
+    # clasificación dentro de su torneo. Se ordena por puntos descendentes, luego
+    # por partidas ganadas descendentes y, por último, por id del participante
+    # para garantizar un orden determinista cuando todo lo demás coincide.
+    @api.depends(
+        'torneo_id',
+        'puntos_acumulados',
+        'partidas_ganadas',
+        'torneo_id.standing_ids.puntos_acumulados',
+        'torneo_id.standing_ids.partidas_ganadas',
+    )
+    def _compute_posicion_final(self):
+        # Agrupamos por torneo para calcular el ranking una sola vez por torneo
+        # en lugar de re-ordenar para cada registro individual.
+        tournaments = self.mapped('torneo_id')
+        rankings = {}
+        for tournament in tournaments:
+            ordered = tournament.standing_ids.sorted(
+                key=lambda s: (-s.puntos_acumulados, -s.partidas_ganadas, s.participante_id.id or 0)
+            )
+            rankings[tournament.id] = {s.id: idx + 1 for idx, s in enumerate(ordered)}
+        for rec in self:
+            if not rec.torneo_id:
+                rec.posicion_final = 0
+                continue
+            rec.posicion_final = rankings.get(rec.torneo_id.id, {}).get(rec.id, 0)
+
+    # El método _compute_premio calcula el premio obtenido por el participante en función de su posición
     #final en el torneo y los premios definidos para esa posición en el torneo.
     @api.depends('posicion_final', 'torneo_id.premio_1', 'torneo_id.premio_2', 'torneo_id.premio_3')
     def _compute_premio(self):
@@ -112,12 +169,9 @@ class EsportsStanding(models.Model):
                     % rec.participante_id.name
                 )
 
-    # este método se encarga de validar que la posición final sea un número entero positivo.
-    @api.constrains('posicion_final')
-    def _check_positive_position(self):
-        for rec in self:
-            if rec.posicion_final is not None and rec.posicion_final <= 0:
-                raise UserError('La posición final debe ser mayor que cero.')
+    # La posición se calcula automáticamente, así que no necesita validación manual.
+    # Se admite el valor 0 transitoriamente cuando el registro aún no tiene torneo
+    # asignado (estado intermedio durante la creación desde el formulario).
 
 
 
